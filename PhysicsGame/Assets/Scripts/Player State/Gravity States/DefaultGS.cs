@@ -8,6 +8,11 @@ public class DefaultGS : GravityState
         // pass
     }
 
+    public override void StateStart()
+    {
+        AssignTarget(null);
+    }
+
     public override void LClick()
     {
         if (target != null) // if we already have something grabbed

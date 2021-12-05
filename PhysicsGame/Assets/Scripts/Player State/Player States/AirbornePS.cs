@@ -15,17 +15,10 @@ public class AirbornePS : PlayerState
             StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
         }
 
-        Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
+        Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
-        if (!(rbody.velocity.magnitude > MAX_VELO))
-        {
-            rbody.AddForce(movement * MOVE_SPEED * StateMultiplier());
-        }
-    }
+        rbody.AddForce(movement * MOVE_SPEED * 0.25f);
 
-    public override void WASD(InputAction.CallbackContext context)
-    {
-        // remove implementation
     }
 
     public override void Jump(InputAction.CallbackContext context)

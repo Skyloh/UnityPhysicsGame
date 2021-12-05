@@ -35,7 +35,7 @@ public class StateLibrary : MonoBehaviour
         ChargeGravityState = new ChargeGS(null, linked_camera, player_transform);
 
         PlayerStateMachine = GetComponent<PlayerSM>();
-        MovementPlayerState = new MovementPS(Vector2.zero, player_transform, player_rb);
+        MovementPlayerState = new MovementPS(Vector2.zero, player_transform, player_rb, linked_camera.transform);
         AirbornePlayerState = new AirbornePS(Vector2.zero, player_transform, player_rb);
         PrejumpPlayerState = new PrejumpPS(Vector2.zero, player_transform, player_rb);
     }

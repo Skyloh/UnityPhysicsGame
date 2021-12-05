@@ -10,11 +10,9 @@ public class SPC : MonoBehaviour
 {
 
     //TODO:
-    // make movement not feel like butter on ice
     // add impact to launches
     //      minor screen shake? particle effects? sfx?
-    // add VFX/particle effects to attraction + hold
-    // add reverse attraction (GravitySolid object that pulls you toward it, not the other way around)
+    // add VFX/particle effects to hold
 
     // to be ported to it's own script?
     private Vector2 mouse_input;

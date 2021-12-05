@@ -6,9 +6,10 @@ using UnityEngine.Rendering.PostProcessing;
 // FPS camera script that also controls charge vignette effect
 public class FPSCam : MonoBehaviour
 {
-    [SerializeField] private float SENSITIVITY = 2f;
+    [SerializeField] private float SENSITIVITY = 4f;
 
     private Transform POV;
+    private GCore core;
 
     [SerializeField] private PostProcessVolume volume;
     private Vignette charge_vignette;
@@ -22,6 +23,8 @@ public class FPSCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         POV = GameObject.FindGameObjectWithTag("Player").transform;
+
+        core = GameObject.FindGameObjectWithTag("Gravity Core").GetComponent<GCore>();
 
         volume.profile.TryGetSettings(out charge_vignette);
 
@@ -39,7 +42,9 @@ public class FPSCam : MonoBehaviour
         xRotation += input.y / SENSITIVITY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        zRotation -= input.x / SENSITIVITY; 
+        core.do_lerp = xRotation > -30f;
+
+        zRotation -= input.x / (SENSITIVITY*2f); 
 
         transform.localRotation = Quaternion.Euler(-xRotation, -zRotation, 0);
     }
@@ -62,5 +67,10 @@ public class FPSCam : MonoBehaviour
     bool isNotYetMaxed()
     {
         return !(charge_vignette.intensity.value > 0.95f);
+    }
+
+    public float getXRotation()
+    {
+        return transform.eulerAngles.x;
     }
 }

@@ -6,6 +6,8 @@ public class PrejumpPS : PlayerState
 
     int frame_timer = 0;
 
+    float initial_velo = 0f;
+
     public PrejumpPS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
     {
 
@@ -15,8 +17,11 @@ public class PrejumpPS : PlayerState
 
     public override void StateStart()
     {
-        Debug.Log("In prejump timer...");
+        initial_velo = rbody.velocity.magnitude;
+        
         frame_timer = 0;
+
+        rbody.isKinematic = true; // STOP MOVING PLEASE
     }
 
     public override void Jump(InputAction.CallbackContext context)
@@ -28,15 +33,15 @@ public class PrejumpPS : PlayerState
 
     public override void InFixedUpdate()
     {
-        rbody.isKinematic = true; // STOP MOVING PLEASE
-
         frame_timer++;
 
         if (frame_timer > PREJUMP_DURATION)
         {
             rbody.isKinematic = false;
 
-            rbody.AddForce(Vector3.up * JUMP_FORCE, ForceMode.Impulse);
+            Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
+
+            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * (initial_velo), ForceMode.Impulse);
 
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont check for isGrounded, we manually swap to airborne.
         }

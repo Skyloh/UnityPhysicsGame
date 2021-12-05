@@ -67,6 +67,8 @@ public class ChargeGS : GravityState
 
             to_be_launched?.Launch(current_charge, false);
 
+            AssignTarget(null);
+
         }
     }
 
