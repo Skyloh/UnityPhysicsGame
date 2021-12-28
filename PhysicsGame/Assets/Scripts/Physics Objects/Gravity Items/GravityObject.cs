@@ -9,6 +9,8 @@ public class GravityObject : MonoBehaviour
     protected bool is_held = false;
     protected int duration_of_attraction = 0; // increases over time when being attracted
 
+    protected bool do_attraction = false;
+
     public delegate void OnLaunch(float launch_force, Vector3 pos);
     public OnLaunch ActivateEffects;
 
@@ -24,6 +26,11 @@ public class GravityObject : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!do_attraction)
+        {
+            return;
+        }
+
         if (is_attracted)
         {
             AttractionUpdate();
@@ -49,6 +56,8 @@ public class GravityObject : MonoBehaviour
 
     public virtual void Attract()
     {
+        do_attraction = true;
+
         target_body.useGravity = false;
 
         is_attracted = true;
@@ -58,8 +67,10 @@ public class GravityObject : MonoBehaviour
 
     public virtual void Released()
     {
-        is_held = false;
+        do_attraction = false;
 
+        is_held = false;
+        
         target_body.AddForce(-target_body.velocity * 5f);
         
         target_body.useGravity = true;
