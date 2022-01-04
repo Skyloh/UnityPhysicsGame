@@ -7,6 +7,8 @@ public class GravitySolid : GravityObject
 {
     private const float ATTRACTION = 8f;
 
+    private const float TERMINAL_VELO = 500f;
+
     private Vector3 collision_point;
 
     public override void Awake()

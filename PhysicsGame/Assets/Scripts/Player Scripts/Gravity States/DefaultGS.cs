@@ -5,7 +5,7 @@ public class DefaultGS : GravityState
 
     public DefaultGS(GravityObject t, FPSCam l, Transform trans) : base(t, l, trans)
     {
-        // pass
+        StateID = 1;
     }
 
     public override void StateStart()
@@ -26,7 +26,7 @@ public class DefaultGS : GravityState
 
         RaycastHit data;
 
-        if (Physics.Raycast(transform.position, linked_camera.transform.TransformDirection(Vector3.forward) * RAYCAST_RANGE, out data))
+        if (Physics.Raycast(transform.position + transform.up * 2, linked_camera.transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
         {
             AssignTarget(data.collider.gameObject.GetComponent<GravityObject>());
 

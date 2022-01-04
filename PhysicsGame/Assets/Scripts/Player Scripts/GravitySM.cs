@@ -43,4 +43,9 @@ public class GravitySM : MonoBehaviour
         return current_state.StateMultiplier();
     }
 
+    public int getState()
+    {
+        return current_state.StateID;
+    }
+
 }

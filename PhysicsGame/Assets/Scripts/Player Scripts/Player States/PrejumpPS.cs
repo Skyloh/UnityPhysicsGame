@@ -10,7 +10,7 @@ public class PrejumpPS : PlayerState
 
     public PrejumpPS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
     {
-
+        StateID = 3;
     }
 
     // this is a jumpsquat state, so many things are disabled.

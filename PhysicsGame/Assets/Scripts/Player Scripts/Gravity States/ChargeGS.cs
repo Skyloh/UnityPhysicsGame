@@ -15,6 +15,8 @@ public class ChargeGS : GravityState
         initial_charge_time = 0f;
         current_charge = 0f;
         do_vignette = true;
+
+        StateID = 2;
     }
 
     public override void FixedUpdate()
@@ -59,7 +61,7 @@ public class ChargeGS : GravityState
         RaycastHit data;
 
         // if we havent grabbed something, apply the launch force to the thing we're looking at without respect to its velo.
-        if (Physics.Raycast(transform.position, linked_camera.transform.TransformDirection(Vector3.forward) * RAYCAST_RANGE, out data))
+        if (Physics.Raycast(transform.position + transform.up * 2, linked_camera.transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
         {
             GravityObject to_be_launched = data.collider.gameObject.GetComponent<GravityObject>();
 

@@ -8,11 +8,18 @@ using UnityEngine.InputSystem;
 
 public class SPC : MonoBehaviour
 {
-
     //TODO:
     // add impact to launches
-    //      minor screen shake? particle effects? sfx?
-    // add VFX/particle effects to hold
+    //      minor screen shake? sfx?
+    // fix slinging (ChargeGS/DefaultGS)?
+    // add animations to movement
+    //      add vaulting ✓
+    //      make vaulting feel good
+    //      add wallclimbing 
+    // loading scenes
+    // cutscenes
+    // fix arm rotation (POLISH)
+    // clean up scripts (POLISH)
 
     // to be ported to it's own script?
     private Vector2 mouse_input;
@@ -22,15 +29,19 @@ public class SPC : MonoBehaviour
     private GravitySM GravityStateManager;
     private PlayerSM PlayerStateManager;
 
+    private Transform tracked;
+
     private void Start()
     {
         linked_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FPSCam>();
+
+        tracked = GameObject.FindGameObjectWithTag("Neck").transform;
 
         GravityStateManager = StateLibrary.library.GravityStateMachine;
         PlayerStateManager = StateLibrary.library.PlayerStateMachine;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         UpdateRotationToCam();
 
@@ -75,7 +86,9 @@ public class SPC : MonoBehaviour
 
     private void UpdateRotationToCam()
     {
-        transform.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
+        transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
     }
 
+    public int getPStateID() => PlayerStateManager.getState();
+    public int getGStateID() => GravityStateManager.getState();
 }

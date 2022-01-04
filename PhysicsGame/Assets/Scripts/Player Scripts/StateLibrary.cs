@@ -19,6 +19,8 @@ public class StateLibrary : MonoBehaviour
     public MovementPS MovementPlayerState;
     public AirbornePS AirbornePlayerState;
     public PrejumpPS PrejumpPlayerState;
+    public IdlePS IdlePlayerState;
+    public VaultPS VaultPlayerState;
 
     
     void Awake()
@@ -28,6 +30,7 @@ public class StateLibrary : MonoBehaviour
         FPSCam linked_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FPSCam>();
         Transform player_transform = gameObject.transform;
         Rigidbody player_rb = GetComponent<Rigidbody>();
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
 
 
         GravityStateMachine = GetComponent<GravitySM>();
@@ -35,9 +38,11 @@ public class StateLibrary : MonoBehaviour
         ChargeGravityState = new ChargeGS(null, linked_camera, player_transform);
 
         PlayerStateMachine = GetComponent<PlayerSM>();
-        MovementPlayerState = new MovementPS(Vector2.zero, player_transform, player_rb, linked_camera.transform);
+        MovementPlayerState = new MovementPS(Vector2.zero, player_transform, player_rb /*, linked_camera.transform*/);
         AirbornePlayerState = new AirbornePS(Vector2.zero, player_transform, player_rb);
         PrejumpPlayerState = new PrejumpPS(Vector2.zero, player_transform, player_rb);
+        IdlePlayerState = new IdlePS(Vector2.zero, player_transform, player_rb);
+        VaultPlayerState = new VaultPS(Vector2.zero, player_transform, player_rb, collider);
     }
 
     public GravityState MatchStringToGS(string search)
@@ -56,7 +61,7 @@ public class StateLibrary : MonoBehaviour
         }
     }
 
-    public PlayerState MatchStringToPS(string search)
+    public PlayerState MatchStringToPS(string search) // make this into a hash please :blush:
     {
         switch (search)
         {
@@ -68,6 +73,12 @@ public class StateLibrary : MonoBehaviour
 
             case "PrejumpPS":
                 return PrejumpPlayerState;
+
+            case "IdlePS":
+                return IdlePlayerState;
+
+            case "VaultPS":
+                return VaultPlayerState;
 
             default:
                 Debug.LogError("Did you mess up the string query?: " + search);

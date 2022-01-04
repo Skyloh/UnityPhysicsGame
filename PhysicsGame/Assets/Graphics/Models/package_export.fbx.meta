@@ -1,0 +1,547 @@
+fileFormatVersion: 2
+guid: b6fa43d91f8d4864cb1a6e51e9eaa53e
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: -7062754163603870473
+    second: GrabbingItem
+  - first:
+      74: 2755282125176430717
+    second: Armature|Idle (Hand)
+  - first:
+      74: 1079665108409675491
+    second: Airborne
+  - first:
+      74: 4724887770959480615
+    second: Armature|Sit
+  - first:
+      74: 8354677232117737857
+    second: Armature|Test
+  - first:
+      74: -1204376385460236453
+    second: Armature|Vault
+  - first:
+      74: 8349542763059015795
+    second: Armature|Walk
+  - first:
+      74: -6802056495092157351
+    second: Armature|Wallcling
+  - first:
+      74: 5008550278639888737
+    second: Armature|Holding
+  - first:
+      74: -3100369314251171874
+    second: Idle
+  - first:
+      74: 1970460594263377210
+    second: Sit
+  - first:
+      74: 6291707047543540627
+    second: Test
+  - first:
+      74: -7069445245006429419
+    second: Vault
+  - first:
+      74: 2667949614841947897
+    second: Walk
+  - first:
+      74: 4919260662463795572
+    second: WallCling
+  - first:
+      74: -724980621604504720
+    second: HoldingItem
+  - first:
+      74: 8892748927181844780
+    second: Prejump
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: headmat
+    second: {fileID: 2100000, guid: cba7bc4096d6ddc42b6cac506b498e50, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: GrabbingItem
+      takeName: Armature|Grabbing + Holding
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Armature|Idle (Hand)
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/ArmIK.L
+        weight: 1
+      - path: Armature/ArmIK.L/ArmIK.L_end
+        weight: 1
+      - path: Armature/ArmIK.R
+        weight: 1
+      - path: Armature/ArmIK.R/ArmIK.R_end
+        weight: 1
+      - path: Armature/LegIK.L
+        weight: 0
+      - path: Armature/LegIK.L/LegIK.L_end
+        weight: 0
+      - path: Armature/LegIK.R
+        weight: 0
+      - path: Armature/LegIK.R/LegIK.R_end
+        weight: 0
+      - path: Armature/LegPollTarget.L
+        weight: 0
+      - path: Armature/LegPollTarget.L/LegPollTarget.L_end
+        weight: 0
+      - path: Armature/LegPollTarget.R
+        weight: 0
+      - path: Armature/LegPollTarget.R/LegPollTarget.R_end
+        weight: 0
+      - path: Armature/waist
+        weight: 0
+      - path: Armature/waist/thigh.L
+        weight: 0
+      - path: Armature/waist/thigh.L/lowerleg.L
+        weight: 0
+      - path: Armature/waist/thigh.L/lowerleg.L/lowerleg.L_end
+        weight: 0
+      - path: Armature/waist/thigh.R
+        weight: 0
+      - path: Armature/waist/thigh.R/lowerleg.R
+        weight: 0
+      - path: Armature/waist/thigh.R/lowerleg.R/lowerleg.R_end
+        weight: 0
+      - path: Armature/waist/torso
+        weight: 0
+      - path: Armature/waist/torso/neck
+        weight: 0
+      - path: Armature/waist/torso/neck/head 1
+        weight: 0
+      - path: Armature/waist/torso/neck/head 1/head_end
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L/finger2.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L/finger2.L/finger3.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L/finger2.L/finger3.L/finger3.L_end
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L/thumb2.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L/thumb2.L/thumb3.L
+        weight: 0
+      - path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L/thumb2.L/thumb3.L/thumb3.L_end
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R/finger2.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R/finger2.R/finger3.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R/finger2.R/finger3.R/finger3.R_end
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R/thumb3.R
+        weight: 0
+      - path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R/thumb3.R/thumb3.R_end
+        weight: 0
+      - path: head
+        weight: 0
+      - path: lower
+        weight: 0
+      - path: lowerarm
+        weight: 0
+      - path: lowerleg
+        weight: 0
+      - path: thigh
+        weight: 0
+      - path: upperarm
+        weight: 0
+      - path: upperbody
+        weight: 0
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: eebd69b304fbcd54092add707fc5137a, type: 2}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Airborne
+      takeName: Armature|Jump
+      internalID: 0
+      firstFrame: 30
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Sit
+      takeName: Armature|Sit
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Test
+      takeName: Armature|Test
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 81
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Vault
+      takeName: Armature|Vault
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Walk
+      takeName: Armature|Walk
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 101
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: WallCling
+      takeName: Armature|Wallcling
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: HoldingItem
+      takeName: Armature|Grabbing + Holding
+      internalID: 0
+      firstFrame: 30
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Prejump
+      takeName: Armature|Jump
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: lower
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

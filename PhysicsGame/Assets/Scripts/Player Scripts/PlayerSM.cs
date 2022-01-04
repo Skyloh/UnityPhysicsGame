@@ -9,7 +9,7 @@ public class PlayerSM : MonoBehaviour
 
     void Start()
     {
-        current_state = StateLibrary.library.MovementPlayerState;
+        current_state = StateLibrary.library.IdlePlayerState;
     }
 
     public void SwapState(string dest)
@@ -41,6 +41,11 @@ public class PlayerSM : MonoBehaviour
     public float StateVal()
     {
         return current_state.StateMultiplier();
+    }
+
+    public int getState()
+    {
+        return current_state.StateID;
     }
 
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5056212933667438444}
   - component: {fileID: 8180132254328619636}
   - component: {fileID: 7996351467121179942}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 5222531089598482808}
   - component: {fileID: 6998369673576632785}
   - component: {fileID: 4127282384812174191}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LaunchEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9580,7 +9580,7 @@ GameObject:
   - component: {fileID: 6606765833288129636}
   - component: {fileID: 7846454514494637977}
   - component: {fileID: 8725443380938592514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Solid
   m_TagString: Untagged
   m_Icon: {fileID: 0}

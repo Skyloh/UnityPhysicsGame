@@ -94,4 +94,6 @@ public class GravityObject : MonoBehaviour
     {
         return is_attracted || is_held;
     }
+
+    public virtual bool isTerminal() => target_body.velocity.magnitude > 500f;
 }

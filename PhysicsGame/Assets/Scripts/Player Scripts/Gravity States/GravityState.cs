@@ -6,7 +6,7 @@ public class GravityState
     protected const float LAUNCH_CHARGE_PER_SECOND = 10f; // used when calculating launch force for right-click functionality
     protected const float MINIMUM_LAUNCH_CHARGE = 0f; // see above, used in the clamp method
     protected const float MAXIMUM_LAUNCH_CHARGE = 50f; // see above, used in the clamp method
-    protected const float RAYCAST_RANGE = 5f; // changes how far we can attract/repel objects
+    protected const float RAYCAST_RANGE = 30f; // changes how far we can attract/repel objects
 
 
     protected Transform transform;
@@ -14,11 +14,17 @@ public class GravityState
     protected GravityObject target;
     protected FPSCam linked_camera;
 
+    protected const int LAYER_MASK = (1 << 10);
+
+    public int StateID;
+
     public GravityState(GravityObject t, FPSCam l, Transform trans)
     {
         target = t;
         linked_camera = l;
         transform = trans;
+
+        StateID = 0;
     }
 
     public void UpdateReferences(GravityObject t, FPSCam l, Transform trans)

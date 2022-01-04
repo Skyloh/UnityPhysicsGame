@@ -22,7 +22,7 @@ public class FPSCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        POV = GameObject.FindGameObjectWithTag("Player").transform;
+        POV = GameObject.FindGameObjectWithTag("Neck").transform;
 
         core = GameObject.FindGameObjectWithTag("Gravity Core").GetComponent<GCore>();
 
@@ -40,7 +40,7 @@ public class FPSCam : MonoBehaviour
     public void RotateCamera(Vector2 input)
     {
         xRotation += input.y / SENSITIVITY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -85f, 85f);
 
         core.do_lerp = xRotation > -30f;
 
