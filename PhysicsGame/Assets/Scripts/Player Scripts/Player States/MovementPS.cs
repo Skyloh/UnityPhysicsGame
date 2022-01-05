@@ -25,6 +25,8 @@ public class MovementPS : PlayerState
         else if (context.performed)
         {
             current_input = context.ReadValue<Vector2>();
+
+            isKeyDown = true;
         }
 
         else if (context.canceled)

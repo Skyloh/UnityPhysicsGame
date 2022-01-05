@@ -10,6 +10,8 @@ public class RigBlending : MonoBehaviour
     [SerializeField] Transform HEAD_BONE;
     [SerializeField] Transform ARM_BONE;
 
+    [SerializeField] GameObject Rig;
+
     [SerializeField] Transform NeckAimTarget; // set to Target
     private GCore CORE;
 
@@ -21,6 +23,16 @@ public class RigBlending : MonoBehaviour
     private void Update()
     {
         NeckAimTarget.position = Vector3.Lerp(NeckAimTarget.position, CORE.getPos(), 0.125f);
+    }
+
+    private void OnEnable()
+    {
+        Rig.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        Rig.SetActive(false);
     }
 
 }

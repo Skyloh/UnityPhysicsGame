@@ -12,7 +12,7 @@ public class PlayerState
 
     private RaycastHit ActionRaycastData;
 
-    protected const float MOVE_SPEED = 50f; // self-explanatory
+    protected const float MOVE_SPEED = 2500f; // self-explanatory
     protected const float MAX_VELO = 5f; // self-explanatory
     protected const float JUMP_FORCE = 5f; // self-explanatory
     protected const int PREJUMP_DURATION = 5;
@@ -57,7 +57,7 @@ public class PlayerState
         {
             Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
-            rbody.AddForce(movement * MOVE_SPEED * StateMultiplier());
+            rbody.AddForce(movement * MOVE_SPEED * StateMultiplier() * Time.deltaTime);
         }
         // * 0.85f, ForceMode.Impulse
         else if (current_input == Vector2.zero)
@@ -87,6 +87,8 @@ public class PlayerState
         else if (context.performed)
         {
             current_input = context.ReadValue<Vector2>();
+
+            isKeyDown = true;
         }
 
         else if (context.canceled)

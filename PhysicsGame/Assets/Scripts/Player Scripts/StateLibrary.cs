@@ -31,7 +31,7 @@ public class StateLibrary : MonoBehaviour
         Transform player_transform = gameObject.transform;
         Rigidbody player_rb = GetComponent<Rigidbody>();
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
-
+        RigBlending blender = GetComponent<RigBlending>();
 
         GravityStateMachine = GetComponent<GravitySM>();
         DefaultGravityState = new DefaultGS(null, linked_camera, player_transform);
@@ -42,7 +42,7 @@ public class StateLibrary : MonoBehaviour
         AirbornePlayerState = new AirbornePS(Vector2.zero, player_transform, player_rb);
         PrejumpPlayerState = new PrejumpPS(Vector2.zero, player_transform, player_rb);
         IdlePlayerState = new IdlePS(Vector2.zero, player_transform, player_rb);
-        VaultPlayerState = new VaultPS(Vector2.zero, player_transform, player_rb, collider);
+        VaultPlayerState = new VaultPS(Vector2.zero, player_transform, player_rb, collider, blender);
     }
 
     public GravityState MatchStringToGS(string search)

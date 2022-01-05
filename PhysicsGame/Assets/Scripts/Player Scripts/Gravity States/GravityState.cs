@@ -16,7 +16,7 @@ public class GravityState
 
     protected const int LAYER_MASK = (1 << 10);
 
-    public int StateID;
+    public int StateID; //used differently than in PS
 
     public GravityState(GravityObject t, FPSCam l, Transform trans)
     {
@@ -68,6 +68,15 @@ public class GravityState
     public void AssignTarget(GravityObject target)
     {
         this.target = target;
+
+        if(target != null)
+        {
+            StateID = 1;
+
+            return;
+        }
+
+        StateID = 0;
     }
 
     public GravityObject GetTarget()

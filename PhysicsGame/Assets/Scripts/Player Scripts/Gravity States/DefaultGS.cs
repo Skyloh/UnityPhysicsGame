@@ -5,7 +5,6 @@ public class DefaultGS : GravityState
 
     public DefaultGS(GravityObject t, FPSCam l, Transform trans) : base(t, l, trans)
     {
-        StateID = 1;
     }
 
     public override void StateStart()

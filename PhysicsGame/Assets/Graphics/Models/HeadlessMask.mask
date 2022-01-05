@@ -6,7 +6,7 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestMask
+  m_Name: HeadlessMask
   m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
@@ -54,11 +54,11 @@ AvatarMask:
   - m_Path: Armature/waist/torso
     m_Weight: 1
   - m_Path: Armature/waist/torso/neck
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Armature/waist/torso/neck/head 1
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Armature/waist/torso/neck/head 1/head_end
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Armature/waist/torso/upperarm.L
     m_Weight: 1
   - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L
@@ -100,7 +100,7 @@ AvatarMask:
   - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R/thumb3.R/thumb3.R_end
     m_Weight: 1
   - m_Path: head
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: lower
     m_Weight: 1
   - m_Path: lowerarm

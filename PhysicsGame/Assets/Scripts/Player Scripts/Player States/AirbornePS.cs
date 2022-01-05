@@ -12,6 +12,8 @@ public class AirbornePS : PlayerState
     {
         if (isGrounded())
         {
+            StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
+            /*
             if (isKeyDown)
             {
                 StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
@@ -20,11 +22,15 @@ public class AirbornePS : PlayerState
             }
 
             StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
+            */
         }
 
-        Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
+        if (!(rbody.velocity.magnitude > MAX_VELO))
+        {
+            Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
-        rbody.AddForce(movement * MOVE_SPEED * 0.25f);
+            rbody.AddForce(movement * MOVE_SPEED * 0.25f * Time.deltaTime);
+        }
 
     }
 

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Animations;
+﻿using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
 {
@@ -10,38 +7,33 @@ public class AnimationHandler : MonoBehaviour
     private SPC SPCONTROL; // this could be better done with a delegate that actives with every state change, but this is a POLISH
 
     #region Hashes + GetSets
-    [SerializeField] private int f_h;
-    [SerializeField] private int u_h;
-    [SerializeField] private int l_h;
+    // private values
+    private int f_value;
+    private int u_value;
 
+    // hashes
+    private int f_Hash;
+    private int u_Hash;
+
+    // getsets
     public int FullState
     {
-        get { return f_h; }
+        get { return f_value; }
         set
         {
-            if (value == f_h) return;
-            f_h = value;
-            AnimationController.SetFloat("FullState", f_h);
+            if (value == f_value) return;
+            f_value = value;
+            AnimationController.SetInteger(f_Hash, f_value);
         }
     }
     public int UpperState
     {
-        get { return u_h; }
+        get { return u_value; }
         set
         {
-            if (value == u_h) return;
-            u_h = value;
-            AnimationController.SetFloat("UpperState", u_h);
-        }
-    }
-    public int LowerState
-    {
-        get { return l_h; }
-        set
-        {
-            if (value == l_h) return;
-            l_h = value;
-            AnimationController.SetFloat("LowerState", l_h);
+            if (value == u_value) return;
+            u_value = value;
+            AnimationController.SetInteger(u_Hash, u_value);
         }
     }
     #endregion
@@ -49,9 +41,8 @@ public class AnimationHandler : MonoBehaviour
     public void Awake()
     {
         SPCONTROL = GetComponent<SPC>();
-        FullState = Animator.StringToHash("FullState");
-        UpperState = Animator.StringToHash("UpperState");
-        //LowerState = Animator.StringToHash("LowerState");
+        f_Hash = Animator.StringToHash("FullState");
+        u_Hash = Animator.StringToHash("UpperState");
     }
 
     private void Start()
@@ -60,9 +51,8 @@ public class AnimationHandler : MonoBehaviour
 
     private void Update()
     {
-        AnimationController.SetInteger(FullState, SPCONTROL.getPStateID());
-        AnimationController.SetInteger(UpperState, SPCONTROL.getGStateID());
-        //AnimationController.SetInteger(LowerState, SPCONTROL.getPStateID());
+        FullState = SPCONTROL.getPStateID();
+        UpperState = SPCONTROL.getGStateID();
     }
 
 }
