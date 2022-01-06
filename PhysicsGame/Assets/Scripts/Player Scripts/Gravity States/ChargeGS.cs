@@ -22,6 +22,9 @@ public class ChargeGS : GravityState
     public override void FixedUpdate()
     {
         current_charge = Mathf.Clamp((Time.time - initial_charge_time) * LAUNCH_CHARGE_PER_SECOND, MINIMUM_LAUNCH_CHARGE, MAXIMUM_LAUNCH_CHARGE);
+        //MOVE THIS TO WHEN THE VALUE IS ACTUALLY NEEDED TO BE CLAMPED (I.E. WHEN IT IS LAUNCHED)
+        //THIS CALCULATION DOESNT NEED TO HAPPEN AS VIGNETTE CLAMPS ITSELF
+        //JUST UPDATE THE CHARGE, DONT CLAMP IT
 
         // this is needed bc fixedupdate runs so many times that it runs between lines of RClick, which resets the vignette
         // then exits the state. in this tiny timeframe, the fixedupdate runs again, re-updating the vignette even though i 
