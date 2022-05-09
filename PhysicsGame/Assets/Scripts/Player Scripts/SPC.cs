@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 // Simple Player Controller
@@ -8,25 +6,14 @@ using UnityEngine.InputSystem;
 
 public class SPC : MonoBehaviour
 {
-    //TODO:
-    // add impact to launches
-    //      minor screen shake? sfx?
-    // fix slinging (ChargeGS/DefaultGS)?
-    // add animations to movement
-    //      add vaulting ✓
-    //      make vaulting feel good
-    //      add wallclimbing 
-    // loading scenes
-    // cutscenes
-    // fix arm rotation (POLISH)
-    // clean up scripts (POLISH)
 
     // to be ported to it's own script?
     private Vector2 mouse_input;
 
     private FPSCam linked_camera;
 
-    private GravitySM GravityStateManager;
+    private GravityControl GController;
+
     private PlayerSM PlayerStateManager;
 
     private Transform tracked;
@@ -37,16 +24,15 @@ public class SPC : MonoBehaviour
 
         tracked = GameObject.FindGameObjectWithTag("Neck").transform;
 
-        GravityStateManager = StateLibrary.library.GravityStateMachine;
+        GController = GetComponent<GravityControl>();
+        GController.PassCameraTransform(linked_camera.transform);
+
         PlayerStateManager = StateLibrary.library.PlayerStateMachine;
     }
 
     private void Update()
     {
-        UpdateRotationToCam();
-
-        // State Managers have their own FixedUpdate loop
-
+        transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
     }
 
     public void WASD_Input(InputAction.CallbackContext context)
@@ -59,12 +45,17 @@ public class SPC : MonoBehaviour
         PlayerStateManager.Jump(context);
     }
 
+    public void Shift_Input(InputAction.CallbackContext context)
+    {
+        PlayerStateManager.Shift(context);
+    }
+
     // if we have a held item, drop it. otherwise, send out a ray to attract an item.
     public void Click_Input(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            GravityStateManager.LClickEvent();
+            GController.LClick();
         }
     }
 
@@ -73,8 +64,9 @@ public class SPC : MonoBehaviour
     {
         if (context.performed)
         {
-            GravityStateManager.RClickEvent();
+            GController.RClick();
         }
+
     }
 
     public void OnMouseDelta(InputAction.CallbackContext context)
@@ -84,11 +76,7 @@ public class SPC : MonoBehaviour
         linked_camera.RotateCamera(mouse_input);
     }
 
-    private void UpdateRotationToCam()
-    {
-        transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
-    }
 
     public int getPStateID() => PlayerStateManager.getState();
-    public int getGStateID() => GravityStateManager.getState();
+    public int getGStateID() => GController.getActionID(); // GravityStateManager.getState() REPLACED WITH ANIM MANAGER FOR UIOVERLAY
 }

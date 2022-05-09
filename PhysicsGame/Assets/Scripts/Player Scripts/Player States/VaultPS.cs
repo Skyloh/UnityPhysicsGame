@@ -29,8 +29,7 @@ public class VaultPS : PlayerState
 
         if (time > 1.8f)
         {
-            StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
-            /*
+            
             if (isKeyDown)
             {
                 StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
@@ -39,7 +38,7 @@ public class VaultPS : PlayerState
             }
 
             StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
-            */
+            
         }
     }
 

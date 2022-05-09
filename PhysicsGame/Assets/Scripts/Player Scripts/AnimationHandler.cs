@@ -3,10 +3,13 @@
 public class AnimationHandler : MonoBehaviour
 {
     [SerializeField] private Animator AnimationController;
+    private Animator ArmAnimationController;
 
-    private SPC SPCONTROL; // this could be better done with a delegate that actives with every state change, but this is a POLISH
+    private delegate void OnAnimUpdate();
+    private static OnAnimUpdate onAnimUpdate;
 
-    #region Hashes + GetSets
+    private SPC SPCONTROL;
+
     // private values
     private int f_value;
     private int u_value;
@@ -15,7 +18,43 @@ public class AnimationHandler : MonoBehaviour
     private int f_Hash;
     private int u_Hash;
 
+    void OnEnable()
+    {
+        onAnimUpdate += UpdateParameters;
+        UIOverlayManager.onToggleOverlay += getArmAnimator;
+    }
+
+    void OnDisable()
+    {
+        onAnimUpdate -= UpdateParameters;
+        UIOverlayManager.onToggleOverlay -= getArmAnimator;
+    }
+
+    public void Start()
+    {
+        SPCONTROL = GetComponent<SPC>();
+        f_Hash = Animator.StringToHash("FullState");
+        u_Hash = Animator.StringToHash("ActionState");
+    }
+
+    private void UpdateParameters()
+    {
+        FullState = SPCONTROL.getPStateID();
+        UpperState = SPCONTROL.getGStateID();
+    }
+
+    public static void UpdateAnimators()
+    {
+        onAnimUpdate();
+    }
+    
+    private void getArmAnimator()
+    {
+        ArmAnimationController = GameObject.FindGameObjectWithTag("ArmAnimator").GetComponent<Animator>();
+    }
+
     // getsets
+    #region
     public int FullState
     {
         get { return f_value; }
@@ -33,26 +72,10 @@ public class AnimationHandler : MonoBehaviour
         {
             if (value == u_value) return;
             u_value = value;
-            AnimationController.SetInteger(u_Hash, u_value);
+            ArmAnimationController.SetInteger(u_Hash, u_value);
         }
     }
     #endregion
-
-    public void Awake()
-    {
-        SPCONTROL = GetComponent<SPC>();
-        f_Hash = Animator.StringToHash("FullState");
-        u_Hash = Animator.StringToHash("UpperState");
-    }
-
-    private void Start()
-    {
-    }
-
-    private void Update()
-    {
-        FullState = SPCONTROL.getPStateID();
-        UpperState = SPCONTROL.getGStateID();
-    }
+    
 
 }

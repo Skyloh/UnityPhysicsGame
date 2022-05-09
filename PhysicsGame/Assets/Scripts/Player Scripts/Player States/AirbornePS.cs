@@ -12,8 +12,7 @@ public class AirbornePS : PlayerState
     {
         if (isGrounded())
         {
-            StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
-            /*
+            
             if (isKeyDown)
             {
                 StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
@@ -22,10 +21,10 @@ public class AirbornePS : PlayerState
             }
 
             StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
-            */
+            
         }
 
-        if (!(rbody.velocity.magnitude > MAX_VELO))
+        if (!(rbody.velocity.magnitude > MAX_VELO * DASH_MULTIPLIER))
         {
             Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
@@ -35,6 +34,11 @@ public class AirbornePS : PlayerState
     }
 
     public override void Jump(InputAction.CallbackContext context)
+    {
+        // remove implementation
+    }
+
+    public override void Shift(InputAction.CallbackContext context)
     {
         // remove implementation
     }

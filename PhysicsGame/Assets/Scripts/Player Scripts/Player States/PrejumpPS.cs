@@ -41,7 +41,7 @@ public class PrejumpPS : PlayerState
 
             Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
 
-            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * (initial_velo), ForceMode.Impulse);
+            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * (initial_velo + 2), ForceMode.Impulse);
 
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont check for isGrounded, we manually swap to airborne.
         }

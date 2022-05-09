@@ -8,7 +8,7 @@ public class PlayerState
     protected Transform transform;
     protected Rigidbody rbody;
 
-    protected bool isKeyDown;
+    public bool isKeyDown;
 
     private RaycastHit ActionRaycastData;
 
@@ -16,6 +16,9 @@ public class PlayerState
     protected const float MAX_VELO = 5f; // self-explanatory
     protected const float JUMP_FORCE = 5f; // self-explanatory
     protected const int PREJUMP_DURATION = 5;
+    protected float DASH_MULTIPLIER = 1f; // applied when in sprint mode
+
+    protected const int AL_MASK = (1 << 11);
 
     public int StateID;
 
@@ -53,16 +56,17 @@ public class PlayerState
             return;
         }
 
-        else if (current_input != Vector2.zero && !(rbody.velocity.magnitude > MAX_VELO))
+        else if (current_input != Vector2.zero && !(rbody.velocity.magnitude > MAX_VELO * DASH_MULTIPLIER))
         {
             Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
             rbody.AddForce(movement * MOVE_SPEED * StateMultiplier() * Time.deltaTime);
         }
+
         // * 0.85f, ForceMode.Impulse
         else if (current_input == Vector2.zero)
         {
-            rbody.AddForce(-rbody.velocity * 0.15f, ForceMode.Impulse);
+            rbody.AddForce(-rbody.velocity * 0.75f, ForceMode.Impulse);
         }
     }
 
@@ -74,6 +78,7 @@ public class PlayerState
     public virtual void StateExit(PlayerState next_state)
     {
         next_state.UpdateReferences(current_input, transform, rbody);
+        next_state.isKeyDown = isKeyDown;
         next_state.StateStart();
     }
 
@@ -107,12 +112,25 @@ public class PlayerState
         }
     }
 
+    public virtual void Shift(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            DASH_MULTIPLIER = 2f;
+        }
+
+        else if (context.canceled)
+        {
+            DASH_MULTIPLIER = 1f;
+        }
+    }
+
 
     protected bool isGrounded() => Physics.Raycast(transform.position, Vector3.down, 0.09f);
 
     protected float getActionDistanceRaycast()
     {
-        Physics.Raycast(transform.position + transform.forward * 1.5f + Vector3.up * 3f, Vector3.down, out ActionRaycastData, 3f);
+        Physics.Raycast(transform.position + transform.forward * 1.5f + Vector3.up * 3f, Vector3.down, out ActionRaycastData, 3f, AL_MASK);
 
         return ActionRaycastData.distance;
     }

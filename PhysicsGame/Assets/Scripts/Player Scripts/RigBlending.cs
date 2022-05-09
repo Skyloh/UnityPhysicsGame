@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RigBlending : MonoBehaviour
 {
-    // TO REMOVE?
 
+    // multi-target constraint script for the arm and head
+    // not visible to the player except through the shadoows or mirrors and such
+    // because of that i dont really care about this :)
 
     [SerializeField] Transform HEAD_BONE;
     [SerializeField] Transform ARM_BONE;
@@ -13,16 +13,16 @@ public class RigBlending : MonoBehaviour
     [SerializeField] GameObject Rig;
 
     [SerializeField] Transform NeckAimTarget; // set to Target
-    private GCore CORE;
+    private Transform CORE;
 
     private void Awake()
     {
-        CORE = GameObject.FindGameObjectWithTag("Gravity Core").GetComponent<GCore>();
+        CORE = GameObject.FindGameObjectWithTag("Gravity Core").transform;
     }
 
     private void Update()
     {
-        NeckAimTarget.position = Vector3.Lerp(NeckAimTarget.position, CORE.getPos(), 0.125f);
+        NeckAimTarget.position = Vector3.Lerp(NeckAimTarget.position, CORE.position, 0.125f);
     }
 
     private void OnEnable()

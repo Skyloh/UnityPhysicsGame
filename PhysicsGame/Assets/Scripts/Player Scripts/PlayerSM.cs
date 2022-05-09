@@ -19,6 +19,8 @@ public class PlayerSM : MonoBehaviour
         current_state.StateExit(next_state);
 
         current_state = next_state;
+
+        AnimationHandler.UpdateAnimators();
     }
 
     public void WASD(InputAction.CallbackContext context)
@@ -29,6 +31,11 @@ public class PlayerSM : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         current_state.Jump(context);
+    }
+
+    public void Shift(InputAction.CallbackContext context)
+    {
+        current_state.Shift(context);
     }
 
     void FixedUpdate()
