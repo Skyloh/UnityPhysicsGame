@@ -5,7 +5,7 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] private Animator AnimationController;
     private Animator ArmAnimationController;
 
-    private delegate void OnAnimUpdate();
+    private delegate void OnAnimUpdate(bool including_fullState);
     private static OnAnimUpdate onAnimUpdate;
 
     private SPC SPCONTROL;
@@ -37,15 +37,21 @@ public class AnimationHandler : MonoBehaviour
         u_Hash = Animator.StringToHash("ActionState");
     }
 
-    private void UpdateParameters()
+    private void UpdateParameters(bool fullState) // only update one or the other, you never need to update both.
     {
-        FullState = SPCONTROL.getPStateID();
-        UpperState = SPCONTROL.getGStateID();
+        if (fullState)
+        {
+            FullState = SPCONTROL.getPStateID();
+        }
+        else
+        {
+            UpperState = SPCONTROL.getGStateID();
+        }
     }
 
-    public static void UpdateAnimators()
+    public static void UpdateAnimators(bool fullState)
     {
-        onAnimUpdate();
+        onAnimUpdate(fullState);
     }
     
     private void getArmAnimator()

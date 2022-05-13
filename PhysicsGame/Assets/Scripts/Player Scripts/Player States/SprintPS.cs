@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementPS : PlayerState
+public class SprintPS : PlayerState
 {
-    // Transform cross_vector;
 
-    public MovementPS(Vector2 c, Transform t, Rigidbody r /*, Transform l*/ ) : base(c, t, r)
+    public SprintPS(Vector2 c, Transform t, Rigidbody r ) : base(c, t, r)
     {
-        StateID = 1;
-
-        isKeyDown = true; // not needed bc of the thing in statestart but i wanna just be sure
+        StateID = 4;
     }
 
     public override void WASD(InputAction.CallbackContext context)
     {
-        
-
         if (context.started)
         {
             isKeyDown = true;
@@ -43,7 +38,7 @@ public class MovementPS : PlayerState
     public override void InFixedUpdate()
     {
         base.InFixedUpdate();
-        
+
         if (!isKeyDown)
         {
             StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
@@ -53,21 +48,28 @@ public class MovementPS : PlayerState
     public override void StateStart()
     {
         isKeyDown = true;
+
+        DASH_MULTIPLIER = 2f;
     }
 
     public override void StateExit(PlayerState next_state)
     {
         rbody.useGravity = true;
 
+        DASH_MULTIPLIER = 1f;
+
         base.StateExit(next_state);
     }
 
     public override void Shift(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.canceled)
         {
-            StateLibrary.library.PlayerStateMachine.SwapState("SprintPS");
+            isKeyDown = true;
+
+            StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
         }
     }
+
 
 }

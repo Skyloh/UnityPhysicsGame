@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GravityControl : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GravityControl : MonoBehaviour
         {
             if (value == action_state) return;
             action_state = value;
-            AnimationHandler.UpdateAnimators();
+            AnimationHandler.UpdateAnimators(false); // just update the hand animations, nothing else
         }
     }
 
@@ -24,7 +25,7 @@ public class GravityControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // some sort of anim goes here (or maybe on onenable/disable)
     }
 
     public void PassCameraTransform(Transform camera)
@@ -34,6 +35,8 @@ public class GravityControl : MonoBehaviour
 
     public void LClick()
     {
+        StopCoroutine(SetAfterDelay());
+
         if (target != null) // if we already have something grabbed
         {
             target.Released(); // drop it :>
@@ -60,6 +63,8 @@ public class GravityControl : MonoBehaviour
 
     public void RClick()
     {
+        StopCoroutine(SetAfterDelay());
+
         RaycastHit data;
 
         // apply the launch force to the thing we're looking at without respect to its velo.
@@ -75,11 +80,11 @@ public class GravityControl : MonoBehaviour
 
             AssignTarget(null);
 
-            actionState = 0;
+            StartCoroutine(SetAfterDelay());
         }
     }
 
-    public void AssignTarget(GravityObject target)
+    private void AssignTarget(GravityObject target)
     {
         this.target = target;
     }
@@ -87,5 +92,12 @@ public class GravityControl : MonoBehaviour
     public int getActionID()
     {
         return actionState;
+    }
+
+    public IEnumerator SetAfterDelay()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        actionState = 0;
     }
 }

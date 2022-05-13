@@ -21,7 +21,12 @@ public class PrejumpPS : PlayerState
         
         frame_timer = 0;
 
-        rbody.isKinematic = true; // STOP MOVING PLEASE
+        // rbody.isKinematic = true; // STOP MOVING PLEASE
+    }
+
+    public override void WASD(InputAction.CallbackContext context)
+    {
+        // pass
     }
 
     public override void Jump(InputAction.CallbackContext context)
@@ -37,7 +42,7 @@ public class PrejumpPS : PlayerState
 
         if (frame_timer > PREJUMP_DURATION)
         {
-            rbody.isKinematic = false;
+            // rbody.isKinematic = false;
 
             Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
 

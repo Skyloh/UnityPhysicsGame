@@ -20,7 +20,7 @@ public class PlayerSM : MonoBehaviour
 
         current_state = next_state;
 
-        AnimationHandler.UpdateAnimators();
+        AnimationHandler.UpdateAnimators(true);
     }
 
     public void WASD(InputAction.CallbackContext context)
@@ -45,14 +45,14 @@ public class PlayerSM : MonoBehaviour
 
     // add input fields
 
-    public float StateVal()
-    {
-        return current_state.StateMultiplier();
-    }
-
     public int getState()
     {
         return current_state.StateID;
+    }
+
+    public void ToggleActionability(int int_to_value) // this is triggered by the wall-action animations because they are essentially cutscenes.
+    {
+        current_state.ToggleActionBool(int_to_value > 0);
     }
 
 }
