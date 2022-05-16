@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class StateLibrary : MonoBehaviour
 { 
@@ -13,7 +15,10 @@ public class StateLibrary : MonoBehaviour
     public IdlePS IdlePlayerState;          // that to transition between states with MatchEnumtoPS (after the enum input is cast to int)
     public SprintPS SprintPlayerState;
     public WallGrabPS WallGrabState;
-    
+    public WallDropPS WallDropState;
+
+    private Queue<PlayerState> guard_exit_toggle_queue = new Queue<PlayerState>();
+
     void Awake()
     {
         library = this;
@@ -28,9 +33,14 @@ public class StateLibrary : MonoBehaviour
         IdlePlayerState = new IdlePS(Vector2.zero, player_transform, player_rb);
         SprintPlayerState = new SprintPS(Vector2.zero, player_transform, player_rb);
         WallGrabState = new WallGrabPS(Vector2.zero, player_transform, player_rb);
+        WallDropState = new WallDropPS(Vector2.zero, player_transform, player_rb);
     }
 
-    public PlayerState MatchStringToPS(string search) // make this into a hash please :blush:
+    // why do i even have this if i made every state public level access??????????????
+    // why dont i just consolidate it all into a public array??????????
+    // this just takes extra time to match a string???????!?!?!?!
+    // wtf past goon
+    public PlayerState MatchStringToPS(string search) // make this into a hash please :blush: > stfu goon dumbass wtf is this implementation >:(
     {
         switch (search)
         {
@@ -50,7 +60,16 @@ public class StateLibrary : MonoBehaviour
                 return SprintPlayerState;
 
             case "WallGrabPS":
+                AirbornePlayerState.guard_exit = true; // lock the player from entering wallgrab from airborne until ground is touched.
+
+                guard_exit_toggle_queue.Enqueue(AirbornePlayerState);
+
                 return WallGrabState;
+
+            case "WallDropPS":
+                StartCoroutine(DisableGuardExitWithDelay());
+
+                return WallDropState;
 
             default:
                 Debug.LogError("Did you mess up the string query?: " + search);
@@ -58,4 +77,16 @@ public class StateLibrary : MonoBehaviour
         }
     }
 
+    // handles disabling the guard_exit boolean on each state.
+    // this is really only used for airborne as of 5/14, but adding
+    // a generic implementation is always nice.
+    // i cant just pass the state to the method because if i needed to
+    // do multiple passes of this method at the same time, it would break.
+    // coroutine does not multithread.
+    private IEnumerator DisableGuardExitWithDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        guard_exit_toggle_queue.Dequeue().guard_exit = false;
+    }
 }

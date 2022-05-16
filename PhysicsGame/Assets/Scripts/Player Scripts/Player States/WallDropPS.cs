@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class WallGrabPS : PlayerState
+public class WallDropPS : PlayerState
 {
-    public WallGrabPS(Vector2 current_input, Transform player, Rigidbody rbody) : base (current_input, player, rbody)
+    public WallDropPS(Vector2 current_input, Transform player, Rigidbody rbody) : base(current_input, player, rbody)
     {
-        StateID = 5;
+        StateID = 6;
     }
 
     public override void StateStart()
@@ -14,13 +14,11 @@ public class WallGrabPS : PlayerState
         allow_rotation = false;
 
         rbody.isKinematic = true;
-
     }
 
     public override void StateExit(PlayerState next_state)
     {
         allow_rotation = true;
-        allow_action = true; // just in case
 
         rbody.isKinematic = false;
 
@@ -29,7 +27,10 @@ public class WallGrabPS : PlayerState
 
     public override void InFixedUpdate()
     {
-        // pass
+        if (allow_action)
+        {
+            StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS");
+        }
     }
 
     public override void WASD(InputAction.CallbackContext context)
@@ -39,18 +40,10 @@ public class WallGrabPS : PlayerState
 
     public override void Jump(InputAction.CallbackContext context)
     {
-        if (allow_action && context.performed)
-        {
-            StateLibrary.library.PlayerStateMachine.SwapState("WallGetupPS");
-        }
+        // pass
     }
     public override void Shift(InputAction.CallbackContext context)
     {
-        if (allow_action && context.performed)
-        {
-            Debug.Log("activated");
-            StateLibrary.library.PlayerStateMachine.SwapState("WallDropPS");
-        }
+        // pass
     }
 }
-

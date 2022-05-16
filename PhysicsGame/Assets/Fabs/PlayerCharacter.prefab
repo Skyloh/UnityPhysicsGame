@@ -206,20 +206,19 @@ GameObject:
   m_Component:
   - component: {fileID: 8388665012304885677}
   - component: {fileID: 8388665012304885676}
-  - component: {fileID: 4186153769790880537}
+  - component: {fileID: 5300394180458327603}
+  - component: {fileID: 4945615430890832603}
   - component: {fileID: 1220093782838616614}
   - component: {fileID: 6176135579284068195}
   - component: {fileID: -7385330120375749634}
   - component: {fileID: -6147905328483353623}
   - component: {fileID: 2208218377266320560}
   - component: {fileID: 4928306563941997221}
-  - component: {fileID: 5300394180458327603}
   - component: {fileID: 7594329018095604717}
   - component: {fileID: 7721054896266875424}
-  - component: {fileID: 5635099004106630490}
   - component: {fileID: 6569087653395706683}
   m_Layer: 0
-  m_Name: Model
+  m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,20 +252,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimationController: {fileID: 5300394180458327603}
---- !u!136 &4186153769790880537
+--- !u!95 &5300394180458327603
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388665012304885675}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b6fa43d91f8d4864cb1a6e51e9eaa53e, type: 3}
+  m_Controller: {fileID: 9100000, guid: 67a63675bfbea4e4983db3a328cd9ec9, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &4945615430890832603
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8388665012304885675}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 41becf65804333e478b5452f7d2e4cb1, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2.65
-  m_Height: 9.31
+  m_Radius: 2.24
+  m_Height: 9.58
   m_Direction: 1
-  m_Center: {x: 0, y: 4.5, z: 0}
+  m_Center: {x: 0, y: 4.68, z: 0}
 --- !u!54 &1220093782838616614
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -281,7 +299,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &6176135579284068195
 MonoBehaviour:
@@ -455,27 +473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HEAD_BONE: {fileID: 1676428769440545756}
   ARM_BONE: {fileID: 2838668667963437837}
-  Rig: {fileID: 0}
+  Rig: {fileID: 8388665013189666537}
   NeckAimTarget: {fileID: 8388665011583502086}
---- !u!95 &5300394180458327603
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8388665012304885675}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b6fa43d91f8d4864cb1a6e51e9eaa53e, type: 3}
-  m_Controller: {fileID: 9100000, guid: 67a63675bfbea4e4983db3a328cd9ec9, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7594329018095604717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,18 +552,6 @@ MonoBehaviour:
   - {fileID: 2918094385825199718}
   - {fileID: 655672294978379724}
   - {fileID: 8228979151191143690}
---- !u!114 &5635099004106630490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8388665012304885675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed1db5bce54fcb48a83ab9b3417d8a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6569087653395706683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,6 +832,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: package_export
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6fa43d91f8d4864cb1a6e51e9eaa53e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1234604062887224516, guid: b6fa43d91f8d4864cb1a6e51e9eaa53e,
         type: 3}

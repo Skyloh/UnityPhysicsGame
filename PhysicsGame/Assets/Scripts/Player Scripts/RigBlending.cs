@@ -8,7 +8,8 @@ public class RigBlending : MonoBehaviour
     // because of that i dont really care about this :)
 
     [SerializeField] Transform HEAD_BONE;
-    [SerializeField] Transform ARM_BONE;
+    [SerializeField] Transform ARM_BONE; // this doesnt really work, i mean the rig multiaim.
+    // fix it maybe?
 
     [SerializeField] GameObject Rig;
 

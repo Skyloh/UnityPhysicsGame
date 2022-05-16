@@ -30,11 +30,6 @@ public class SPC : MonoBehaviour
         PlayerStateManager = StateLibrary.library.PlayerStateMachine;
     }
 
-    private void Update()
-    {
-        transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
-    }
-
     public void WASD_Input(InputAction.CallbackContext context)
     {
         PlayerStateManager.WASD(context);
@@ -49,6 +44,12 @@ public class SPC : MonoBehaviour
     {
         PlayerStateManager.Shift(context);
     }
+
+
+    // !!!:
+    // THE GC METHODS HAVING NO CUTSCENE CONTROL COULD BE AN ISSUE
+    // MAKE SURE TO DROP OBJECTS WHEN CARRYING ONE AND ACTIVATING LEDGEHANG
+
 
     // if we have a held item, drop it. otherwise, send out a ray to attract an item.
     public void Click_Input(InputAction.CallbackContext context)
@@ -71,9 +72,14 @@ public class SPC : MonoBehaviour
 
     public void OnMouseDelta(InputAction.CallbackContext context)
     {
-        mouse_input = context.ReadValue<Vector2>();
+        if (PlayerStateManager.CanRotate() && context.performed)
+        {
+            mouse_input = context.ReadValue<Vector2>();
 
-        linked_camera.RotateCamera(mouse_input);
+            linked_camera.RotateCamera(mouse_input);
+
+            transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
+        }
     }
 
 

@@ -4,25 +4,25 @@ using UnityEngine.InputSystem;
 public class PlayerState
 {
     protected bool allow_action = true; // essentially, puts the player into a "cutscene" for a brief moment while an animation plays
+    protected bool allow_rotation = true;
 
     protected Vector2 current_input;
-
     protected Transform transform;
     protected Rigidbody rbody;
 
-    public bool isKeyDown;
-
-    private RaycastHit ActionRaycastData;
-
-    protected const float MOVE_SPEED = 5000f; // self-explanatory
-    protected const float MAX_VELO = 5f; // self-explanatory
-    protected const float JUMP_FORCE = 15f; // self-explanatory
+    protected const float MOVE_SPEED = 200f; // self-explanatory
+    protected const float MAX_RESULTANT_GROUND_VELO = 5f; // the max groundspeed the character can apply to themselves
+    protected const float MAX_RESULTANT_AIR_VELO = 6f; // the max airspeed the character can apply to themselves (before custom drag sets in)
+    protected const float JUMP_FORCE = 8f; // self-explanatory
     protected const int PREJUMP_DURATION = 5;
     protected float DASH_MULTIPLIER = 1f; // applied when in sprint mode
-
-    protected const int AL_MASK = (1 << 10);
+    protected float MIN_WALL_CLIMB_HEIGHT = 0.5f;
+    protected const int AL_MASK = 1 << 11;
 
     public int StateID;
+    public bool isKeyDown;
+
+    public bool guard_exit = false; // limits to which state the current state can exit to, and is set by the StateLibrary
 
     public PlayerState(Vector2 current_input, Transform player, Rigidbody rbody)
     {
@@ -44,26 +44,21 @@ public class PlayerState
 
     public virtual void InFixedUpdate()
     {
-        Debug.Log((int)didWallRaycastHit());
-
         if (!isGrounded())
         {
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS");
-
-            return;
         }
 
-        else if (current_input != Vector2.zero && !(rbody.velocity.magnitude > MAX_VELO * DASH_MULTIPLIER))
+        else if (current_input != Vector2.zero && !(rbody.velocity.magnitude > MAX_RESULTANT_GROUND_VELO * DASH_MULTIPLIER))
         {
             Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
-
-            rbody.AddForce(movement * MOVE_SPEED * Time.deltaTime);
+            
+            rbody.AddForce(movement * MOVE_SPEED * Time.deltaTime, ForceMode.VelocityChange);
         }
 
-        // * 0.85f, ForceMode.Impulse
         else if (current_input == Vector2.zero)
         {
-            rbody.AddForce(-rbody.velocity * 0.75f, ForceMode.Impulse);
+            rbody.AddForce(-rbody.velocity * 0.75f, ForceMode.VelocityChange);
         }
     }
 
@@ -115,19 +110,27 @@ public class PlayerState
         // only defined in Movement and Sprint
     }
 
-
     protected bool isGrounded() => Physics.Raycast(transform.position, Vector3.down, 0.09f);
 
-    protected float didWallRaycastHit()
-    {
-        Physics.Raycast(transform.position + transform.forward * 1.5f + Vector3.up * 3f, Vector3.down * 0.5f, out ActionRaycastData, AL_MASK); // WIP HERE
-
-        return ActionRaycastData.distance;
-    }
+    protected float getXYVelo() => Mathf.Sqrt(Mathf.Pow(rbody.velocity.x, 2) + Mathf.Pow(rbody.velocity.y, 2));
 
     public void ToggleActionBool(bool to_value)
     {
         allow_action = to_value;
+    }
+
+    public void ToggleRotationBool(bool to_value)
+    {
+        allow_rotation = to_value;
+    }
+
+    public bool GetAllowAction()
+    {
+        return allow_action;
+    }
+    public bool GetAllowRotation()
+    {
+        return allow_rotation;
     }
 
 }

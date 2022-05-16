@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TestMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 0
+  - m_Path: Armature/ArmIK.L
+    m_Weight: 1
+  - m_Path: Armature/ArmIK.R
+    m_Weight: 1
+  - m_Path: Armature/LegPollTarget.L
+    m_Weight: 0
+  - m_Path: Armature/LegPollTarget.R
+    m_Weight: 0
+  - m_Path: Armature/waist
+    m_Weight: 0
+  - m_Path: Armature/waist/thigh.L
+    m_Weight: 0
+  - m_Path: Armature/waist/thigh.L/lowerleg.L
+    m_Weight: 0
+  - m_Path: Armature/waist/thigh.R
+    m_Weight: 0
+  - m_Path: Armature/waist/thigh.R/lowerleg.R
+    m_Weight: 0
+  - m_Path: Armature/waist/torso
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/neck
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/neck/head 1
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L/finger2.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/finger1.L/finger2.L/finger3.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L/thumb2.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.L/lowerarm.L/thumb1.L/thumb2.L/thumb3.L
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R/finger2.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/finger1.R/finger2.R/finger3.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R
+    m_Weight: 1
+  - m_Path: Armature/waist/torso/upperarm.R/lowerarm.R/thumb1.R/thumb2.R/thumb3.R
+    m_Weight: 1
+  - m_Path: head
+    m_Weight: 0
+  - m_Path: lower
+    m_Weight: 0
+  - m_Path: lowerarm
+    m_Weight: 1
+  - m_Path: lowerleg
+    m_Weight: 0
+  - m_Path: thigh
+    m_Weight: 0
+  - m_Path: upperarm
+    m_Weight: 1
+  - m_Path: upperbody
+    m_Weight: 0

@@ -14,8 +14,6 @@ public class MovementPS : PlayerState
 
     public override void WASD(InputAction.CallbackContext context)
     {
-        
-
         if (context.started)
         {
             isKeyDown = true;

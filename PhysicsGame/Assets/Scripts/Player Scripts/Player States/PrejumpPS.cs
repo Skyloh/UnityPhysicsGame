@@ -8,6 +8,12 @@ public class PrejumpPS : PlayerState
 
     float initial_velo = 0f;
 
+    // KNOWN *BUG*
+
+    // if you enter a movement state and IMMEDIATELY exit it by jumping, you gain more speed initially
+    // than if you ran for a bit then jumped. I kinda like this, but it is technically a bug and
+    // doesn't make physical sense.
+
     public PrejumpPS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
     {
         StateID = 3;
@@ -17,11 +23,9 @@ public class PrejumpPS : PlayerState
 
     public override void StateStart()
     {
-        initial_velo = rbody.velocity.magnitude;
+        initial_velo = getXYVelo();
         
         frame_timer = 0;
-
-        // rbody.isKinematic = true; // STOP MOVING PLEASE
     }
 
     public override void WASD(InputAction.CallbackContext context)
@@ -34,7 +38,6 @@ public class PrejumpPS : PlayerState
         // remove implementation
     }
 
-    // Lclick and Rclick are disabled
 
     public override void InFixedUpdate()
     {
@@ -46,7 +49,7 @@ public class PrejumpPS : PlayerState
 
             Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
 
-            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * (initial_velo + 2), ForceMode.Impulse);
+            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * initial_velo, ForceMode.Impulse);
 
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont check for isGrounded, we manually swap to airborne.
         }

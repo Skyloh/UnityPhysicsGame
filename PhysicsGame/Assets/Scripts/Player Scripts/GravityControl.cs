@@ -15,12 +15,13 @@ public class GravityControl : MonoBehaviour
         {
             if (value == action_state) return;
             action_state = value;
-            AnimationHandler.UpdateAnimators(false); // just update the hand animations, nothing else
+            AnimationHandler.UpdateAnimators(true); // just update the hand animations, nothing else
         }
     }
 
     private GravityObject target;
     private Transform linked_camera_transform; // this is the player's perspective camera.
+
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +75,7 @@ public class GravityControl : MonoBehaviour
 
             GravityObject to_be_launched = data.collider.gameObject.GetComponent<GravityObject>();
 
+            // do i need these optionals?
             to_be_launched?.Released(); // ISSUE: do i need this?
 
             to_be_launched?.Launch(POWER, false);

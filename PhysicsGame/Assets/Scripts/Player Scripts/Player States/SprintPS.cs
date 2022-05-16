@@ -49,7 +49,7 @@ public class SprintPS : PlayerState
     {
         isKeyDown = true;
 
-        DASH_MULTIPLIER = 2f;
+        DASH_MULTIPLIER = 1.5f;
     }
 
     public override void StateExit(PlayerState next_state)
@@ -67,7 +67,7 @@ public class SprintPS : PlayerState
         {
             isKeyDown = true;
 
-            StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
+            StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
         }
     }
 
