@@ -7,8 +7,7 @@ public class AirbornePS : PlayerState
     // feel weird. it requires playtesting.
 
     private RaycastHit ActionRaycastData;
-    private float ar_distance; // caches the distance, allowing for -1 to be stored
-    // you *can* set the distance on a data output struct but that looks really really weird so im not gonna :>
+    private float ar_distance; // caches raycast distance, even though RaycastHit is a struct :/
 
 
     // KNOWN *BUG*
@@ -23,27 +22,25 @@ public class AirbornePS : PlayerState
 
     private float GetActionRaycastDistance()
     {
-        // if we don't hit anything, return -1. if we just returned the datadistance, we'd get 0.
-        // this would trigger the wall-climb state even tho we just arent in front of anything.
-        // if the raycast is in the wall completely, it'll return 0, therefore we ignore that
-        // value too.
-        if (!Physics.Raycast(transform.position + transform.forward * 1.75f + Vector3.up * 3f, Vector3.down, out ActionRaycastData, 3f, AL_MASK))
-        {
-            return -1f;
-        }
-
-        return ActionRaycastData.distance;
+        // send a raycast out in front and above the player to detect for any ledges from their mid-section to below (maybe idk)
+        Physics.Raycast(transform.position + transform.forward + Vector3.up, Vector3.up * 1.5f, out ActionRaycastData, 1f, AL_MASK);
+        
+        return (ActionRaycastData.collider != null) ? ActionRaycastData.transform.position.y : -5f; // -5f because at this raycast length, 5 is never a value
     }
 
     // rework this for optimal execution (i.e. change around the else if and ifs
     public override void InFixedUpdate()
     {
+        // must be cached
         ar_distance = GetActionRaycastDistance();
 
         // if we hit a ledge the proper distance away, grab it.
         // don't do this if this exit is guarded, because that means we grabbed a ledge recently.
-        if (!guard_exit && !(ar_distance <= 0) && ar_distance < MIN_WALL_CLIMB_HEIGHT) // in future add the caviat that the player cannot be moving fast away/parallel to edge before grabbing it.
+        if (!guard_exit && !(Mathf.Abs(ar_distance) > 4f)) // in future add the caviat that the player cannot be moving fast away/parallel to edge before grabbing it.
         {
+            // adjusts the player location to match the animation because apparently root transforms are cringe
+            transform.position += Vector3.up * (ar_distance - transform.position.y - 2.1f) + transform.forward * 0.3f;
+
             StateLibrary.library.PlayerStateMachine.CarefulSwapState("WallGrabPS"); // dont go into wallgrab if we were in it before
             // this is important bc it essentially locks the player from being immediately returned into wallgrab after letting go.
         }
@@ -64,9 +61,11 @@ public class AirbornePS : PlayerState
 
         Vector3 movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
 
-        rbody.AddForce(movement * MOVE_SPEED * 0.2f * Time.deltaTime, ForceMode.Force); // allows for subtle air movement
+        rbody.AddForce(movement * MOVE_SPEED * 0.2f * Time.deltaTime, ForceMode.Force); // allows for >>subtle<< air movement
 
-        if (getXYVelo() > MAX_RESULTANT_AIR_VELO)
+        // ignore Y velo because we dont care about limiting rising/falling speed.
+        // probably really suboptimal to define my own method of this 2d pythag but stfu future goon
+        if (getXZVelo() > MAX_RESULTANT_AIR_VELO)
         {
             rbody.AddForce(rbody.velocity * -1.5f, ForceMode.Force);
         }

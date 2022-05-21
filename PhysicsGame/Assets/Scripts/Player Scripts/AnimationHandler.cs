@@ -31,11 +31,11 @@ public class AnimationHandler : MonoBehaviour
 
     public delegate void OnAnimUpdate(bool how_do_i_describe_this_bool);
     public static OnAnimUpdate UpdateAnimators;
-    // should contain:
+    // should eventually contain:
     // updating variables in the animators to swap animation states
     //      including that of the overlay
-    // updating camera fov / telling it to start dynamically adjusted fov (for airborne state, i.e. if FullState == 2)
-    // updating the current sound effect playback
+    // updating camera fov / telling it to start dynamically adjusted fov (for airborne state, i.e. if FullState == 2) (delegate)
+    // updating the current sound effect playback (also delegate, same one as before?)
 
     private SPC SPCONTROL;
 
@@ -53,7 +53,7 @@ public class AnimationHandler : MonoBehaviour
         SceneManager.sceneLoaded += OnOverlaySceneLoaded;
     }
 
-    void OnDisable()
+    void OnDisable() // no memory leaks here nosiree
     {
         UpdateAnimators -= UpdateParameters;
         SceneManager.sceneLoaded -= OnOverlaySceneLoaded;
@@ -61,6 +61,7 @@ public class AnimationHandler : MonoBehaviour
 
     public void Start()
     {
+        // loadscene and init hashes and stuff
         SceneManager.LoadScene("OverlayScene", LoadSceneMode.Additive);
 
         SPCONTROL = GetComponent<SPC>();
@@ -70,7 +71,7 @@ public class AnimationHandler : MonoBehaviour
 
     private void OnOverlaySceneLoaded(Scene overlay, LoadSceneMode mode)
     {
-        // just a safeguard in case i load any other scene
+        // just a safeguard in case i load any other scene in the not so distant future
         // also i hope i dont accidentally mess this up in the future somehow lmao
         if (overlay.buildIndex == 1)
         {
@@ -78,10 +79,11 @@ public class AnimationHandler : MonoBehaviour
 
             OverlayAnimController = GameObject.FindGameObjectWithTag("ArmAnimator").GetComponent<Animator>();
 
-            UpdateAnimators(true);
+            UpdateAnimators(true); // run an init update
         }
     }
 
+    // 
     private void UpdateParameters(bool should_update_upperstate)
     {
 
@@ -116,6 +118,7 @@ public class AnimationHandler : MonoBehaviour
         }
     }
 
+    // to toggle the overlay from and to cutscenes or transitions, currently unfinished and unused.
     private IEnumerator ToggleOverlay(bool with_anim, bool to_enable)
     {
         if (with_anim)
@@ -148,6 +151,8 @@ public class AnimationHandler : MonoBehaviour
     */
 
     #region Encapsulated Get Sets
+    // SetXXXX functions are expensive, so we want to reduce their calls and string
+    // comparisons as much as possible.
     public int FullState
     {
         get { return f_value; }

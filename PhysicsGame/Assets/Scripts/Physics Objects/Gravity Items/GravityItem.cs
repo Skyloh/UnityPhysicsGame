@@ -32,11 +32,11 @@ public class GravityItem : GravityObject
         transform.position = Vector3.Lerp(transform.position, gCore.position, 0.125f);
     }
 
-    public override void Launch(float l_s, bool with_curr_velo)
+    public override void Launch(float l_s, bool with_curr_velo, Vector3 direction)
     {
-        Vector3 l_force = (Camera.main.transform.forward * l_s) + (with_curr_velo ? target_body.velocity : Vector3.zero);
+        Vector3 l_force = (direction * l_s) + (with_curr_velo ? target_body.velocity : Vector3.zero);
 
-        target_body.AddForceAtPosition(l_force, -gCore.position, ForceMode.Impulse);
+        target_body.AddForceAtPosition(l_force, -gCore.position, ForceMode.Impulse); 
 
         duration_of_attraction = 0;
 

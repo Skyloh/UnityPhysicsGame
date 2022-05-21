@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-// FPS camera script that also controls charge vignette effect
 public class FPSCam : MonoBehaviour
 {
     [SerializeField] private float SENSITIVITY = 4f;
@@ -30,11 +29,7 @@ public class FPSCam : MonoBehaviour
 
         zRotation -= input.x / (SENSITIVITY*2f); 
 
-        transform.localRotation = Quaternion.Euler(-xRotation, -zRotation, 0);
+        transform.rotation = Quaternion.Euler(-xRotation, -zRotation, 0); // used to be localRotation when the camera was not child of PlayerCharacter
     }
 
-    public float getXRotation()
-    {
-        return transform.eulerAngles.x;
-    }
 }

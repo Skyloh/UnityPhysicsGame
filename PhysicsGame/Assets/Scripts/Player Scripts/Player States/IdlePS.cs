@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class IdlePS : PlayerState
 {
+    // simple class with almost no extra definitions
+
     public IdlePS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
     {
         StateID = 0;

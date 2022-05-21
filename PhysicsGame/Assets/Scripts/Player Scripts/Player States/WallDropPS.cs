@@ -3,6 +3,12 @@ using UnityEngine.InputSystem;
 
 public class WallDropPS : PlayerState
 {
+
+    // see WallGrabPS
+    // even simpler, this is just an animation
+    // one entrance, one exit.
+    // although, it exists into Airborne because I felt that would be prudent :>
+
     public WallDropPS(Vector2 current_input, Transform player, Rigidbody rbody) : base(current_input, player, rbody)
     {
         StateID = 6;
@@ -19,7 +25,6 @@ public class WallDropPS : PlayerState
     public override void StateExit(PlayerState next_state)
     {
         allow_rotation = true;
-
         rbody.isKinematic = false;
 
         base.StateExit(next_state);
@@ -29,6 +34,8 @@ public class WallDropPS : PlayerState
     {
         if (allow_action)
         {
+            isKeyDown = false;
+
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS");
         }
     }

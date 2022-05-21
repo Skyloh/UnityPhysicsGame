@@ -4,15 +4,17 @@ using UnityEngine.InputSystem;
 public class PrejumpPS : PlayerState
 {
 
-    int frame_timer = 0;
+    int frame_timer = 0; // tracks the frame count the player has been in prejump for
 
-    float initial_velo = 0f;
+    float initial_velo = 0f; // used to store the velo going into this state so it can be applied going out.
 
     // KNOWN *BUG*
 
     // if you enter a movement state and IMMEDIATELY exit it by jumping, you gain more speed initially
     // than if you ran for a bit then jumped. I kinda like this, but it is technically a bug and
-    // doesn't make physical sense.
+    // doesn't make physical sense
+    // 
+    // but since when did i care about that
 
     public PrejumpPS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
     {
@@ -23,7 +25,7 @@ public class PrejumpPS : PlayerState
 
     public override void StateStart()
     {
-        initial_velo = getXYVelo();
+        initial_velo = getXZVelo();
         
         frame_timer = 0;
     }
@@ -45,13 +47,11 @@ public class PrejumpPS : PlayerState
 
         if (frame_timer > PREJUMP_DURATION)
         {
-            // rbody.isKinematic = false;
+            Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y; // i allow more lateral movement here (no 0.5 modifier). why?
 
-            Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y;
+            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * initial_velo, ForceMode.Impulse); // WOOOOO FORCEMODE.IMPULSEEEEE
 
-            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * initial_velo, ForceMode.Impulse);
-
-            StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont check for isGrounded, we manually swap to airborne.
+            StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont need to check for isGrounded, we manually swap to airborne.
         }
     }
 }

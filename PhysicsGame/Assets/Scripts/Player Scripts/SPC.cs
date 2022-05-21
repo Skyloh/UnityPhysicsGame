@@ -20,7 +20,7 @@ public class SPC : MonoBehaviour
 
     private void Start()
     {
-        linked_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<FPSCam>();
+        linked_camera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<FPSCam>();
 
         tracked = GameObject.FindGameObjectWithTag("Neck").transform;
 
@@ -78,7 +78,10 @@ public class SPC : MonoBehaviour
 
             linked_camera.RotateCamera(mouse_input);
 
-            transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y);
+            // don't be scared this is just to keep the transform's facing direction in line with the camera's
+            // hence the double = sign
+            //transform.eulerAngles = tracked.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y); // is this even needed?
+            transform.eulerAngles = Vector3.up * (linked_camera.transform.eulerAngles.y); // no tracked.euler because i think it's redundant (bc of aim constraint)
         }
     }
 

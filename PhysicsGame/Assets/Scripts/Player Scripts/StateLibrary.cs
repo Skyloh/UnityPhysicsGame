@@ -40,7 +40,7 @@ public class StateLibrary : MonoBehaviour
     // why dont i just consolidate it all into a public array??????????
     // this just takes extra time to match a string???????!?!?!?!
     // wtf past goon
-    public PlayerState MatchStringToPS(string search) // make this into a hash please :blush: > stfu goon dumbass wtf is this implementation >:(
+    public PlayerState MatchStringToPS(string search) // make this into a hash please :blush: >>> // stfu goon dumbass wtf is this implementation >:(
     {
         switch (search)
         {
@@ -72,7 +72,7 @@ public class StateLibrary : MonoBehaviour
                 return WallDropState;
 
             default:
-                Debug.LogError("Did you mess up the string query?: " + search);
+                Debug.LogError("Did you mess up the string query? lmao stupid idiot maybe be better next time (cringe): " + search);
                 return null;
         }
     }

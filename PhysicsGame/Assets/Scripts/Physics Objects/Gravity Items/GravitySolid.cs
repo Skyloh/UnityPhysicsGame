@@ -42,7 +42,7 @@ public class GravitySolid : GravityObject
         target_body.useGravity = false;
     }
 
-    public override void Launch(float l_s, bool with_curr_velo)
+    public override void Launch(float l_s, bool with_curr_velo, Vector3 direction)
     {
         do_attraction = false;
 

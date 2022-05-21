@@ -3,6 +3,12 @@ using System.Collections;
 
 public class GravityControl : MonoBehaviour
 {
+    // the main gimmick script. can be toggle at any time to disable gravity controls.
+    // further implementation will maybe have unlockable abilities.
+
+    // little comments on this one because the whole suite of gravity implementations is due for
+    // a little bit of a massive overhaul.
+
     private const float RAYCAST_RANGE = 30f; // changes how far we can attract/repel objects
     private const float POWER = 25f; // obvious
     private const int LAYER_MASK = (1 << 10); // is this even right anymore idk
@@ -19,16 +25,10 @@ public class GravityControl : MonoBehaviour
         }
     }
 
-    private GravityObject target;
+    private GravityObject target; // what are we targeting now?
     private Transform linked_camera_transform; // this is the player's perspective camera.
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // some sort of anim goes here (or maybe on onenable/disable)
-    }
-
+    // this is just a setter for a private field
     public void PassCameraTransform(Transform camera)
     {
         linked_camera_transform = camera;
@@ -78,7 +78,7 @@ public class GravityControl : MonoBehaviour
             // do i need these optionals?
             to_be_launched?.Released(); // ISSUE: do i need this?
 
-            to_be_launched?.Launch(POWER, false);
+            to_be_launched?.Launch(POWER, false, linked_camera_transform.TransformDirection(Vector3.forward));
 
             AssignTarget(null);
 
@@ -96,6 +96,7 @@ public class GravityControl : MonoBehaviour
         return actionState;
     }
 
+    // after the launch anim timer is "finished", reset the actionState to 0.
     public IEnumerator SetAfterDelay()
     {
         yield return new WaitForSeconds(0.25f);

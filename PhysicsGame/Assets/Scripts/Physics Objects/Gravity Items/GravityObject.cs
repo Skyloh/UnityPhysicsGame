@@ -50,7 +50,7 @@ public class GravityObject : MonoBehaviour
     {
     }
 
-    public virtual void Launch(float l_s, bool with_curr_velo)
+    public virtual void Launch(float l_s, bool with_curr_velo, Vector3 direction)
     {
     }
 

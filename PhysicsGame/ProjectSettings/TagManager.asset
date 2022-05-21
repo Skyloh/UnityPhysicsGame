@@ -8,6 +8,8 @@ TagManager:
   - Gravity Core
   - Neck
   - ArmAnimator
+  - Ledge
+  - PlayerCamera
   layers:
   - Default
   - TransparentFX
