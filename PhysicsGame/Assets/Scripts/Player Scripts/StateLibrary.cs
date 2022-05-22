@@ -16,6 +16,7 @@ public class StateLibrary : MonoBehaviour
     public SprintPS SprintPlayerState;
     public WallGrabPS WallGrabState;
     public WallDropPS WallDropState;
+    public WallGetupPS WallGetupState;
 
     private Queue<PlayerState> guard_exit_toggle_queue = new Queue<PlayerState>();
 
@@ -34,6 +35,7 @@ public class StateLibrary : MonoBehaviour
         SprintPlayerState = new SprintPS(Vector2.zero, player_transform, player_rb);
         WallGrabState = new WallGrabPS(Vector2.zero, player_transform, player_rb);
         WallDropState = new WallDropPS(Vector2.zero, player_transform, player_rb);
+        WallGetupState = new WallGetupPS(Vector2.zero, player_transform, player_rb);
     }
 
     // why do i even have this if i made every state public level access??????????????
@@ -45,6 +47,10 @@ public class StateLibrary : MonoBehaviour
         switch (search)
         {
             case "MovementPS":
+                StopCoroutine(DisableGuardExitWithDelay());
+
+                AirbornePlayerState.guard_exit = false;
+
                 return MovementPlayerState;
 
             case "AirbornePS":
@@ -60,7 +66,7 @@ public class StateLibrary : MonoBehaviour
                 return SprintPlayerState;
 
             case "WallGrabPS":
-                AirbornePlayerState.guard_exit = true; // lock the player from entering wallgrab from airborne until ground is touched.
+                AirbornePlayerState.guard_exit = true; // lock the player from entering wallgrab from airborne until timer is done
 
                 guard_exit_toggle_queue.Enqueue(AirbornePlayerState);
 
@@ -70,6 +76,11 @@ public class StateLibrary : MonoBehaviour
                 StartCoroutine(DisableGuardExitWithDelay());
 
                 return WallDropState;
+
+            case "WallGetupPS":
+                StartCoroutine(DisableGuardExitWithDelay());
+
+                return WallGetupState;
 
             default:
                 Debug.LogError("Did you mess up the string query? lmao stupid idiot maybe be better next time (cringe): " + search);

@@ -21,11 +21,12 @@ public class PlayerState
     protected const int PREJUMP_DURATION = 5;
     protected const int AL_MASK = 1 << 11; // bit layer mask shifted to only target ActionableTerrain layer objects
     protected const float RAYCAST_LENGTH = 0.09f; // self-explanatory
+    protected const float MAX_INCLINE_DOT = 0.4f; // the max dot product for a slope to warrant movement aid
+    protected const float MAX_SLOPE_ANGLE = 40f; // the max angle for a slope to warrant airdrift aid to prevent collider stickiness
 
     protected float raycast_offset = 0f; // extends the length of the ray
     protected float dash_multiplier = 1f; // applied when in sprint mode
-    protected float MIN_WALL_CLIMB_HEIGHT = 0.5f; // >>>>>>>>>>>> p sure this may be unused, will check <<<<<<<<<<<<< ALSO WHY NOT A CONSTANT?
-
+    protected RaycastHit GroundInfo;
 
     public int StateID;
     public bool isKeyDown; // lazy implementation for holding a key between state changes, but it works
@@ -129,7 +130,7 @@ public class PlayerState
     }
 
     // returns a boolean to see if the player is within ground bounds. ray length varies in some states.
-    protected bool isGrounded() => Physics.Raycast(transform.position, Vector3.down, RAYCAST_LENGTH + raycast_offset);
+    protected bool isGrounded() => Physics.Raycast(transform.position, Vector3.down, out GroundInfo, RAYCAST_LENGTH + raycast_offset);
 
     // 2d pythag used in jumping states to limiting lateral movement
     protected float getXZVelo() => Mathf.Sqrt(Mathf.Pow(rbody.velocity.x, 2) + Mathf.Pow(rbody.velocity.z, 2));

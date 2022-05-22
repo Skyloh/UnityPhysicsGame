@@ -53,16 +53,16 @@ public class MovementPS : PlayerState
             return;
         }
 
-        dot = Vector3.Dot(up_direction, info.normal);
+        dot = Mathf.Abs(Vector3.Dot(up_direction, info.normal));
 
-        apply_slope = Mathf.Abs(dot) > 0.05f;
+        apply_slope = (dot > MAX_INCLINE_DOT);
 
-        raycast_offset = apply_slope ? 0.75f : 0f;
-
-        parity = info.distance > 1f ? Mathf.Pow(dot, 2f) * -0.55f : 1f; // WORK HERE, THIS 0.55 COEFF CANT BE HARDCODED
+        raycast_offset = apply_slope ? dot * 0.75f : 0f;
 
         if (apply_slope)
         {
+            parity = info.distance > 1f ? Mathf.Pow(dot, 2f) * -0.55f : 1f; // WORK HERE, THIS 0.55 COEFF CANT BE HARDCODED
+
             transform.Translate(parity * (up_direction * info.normal.y) * (1f - dot));
         }
 
