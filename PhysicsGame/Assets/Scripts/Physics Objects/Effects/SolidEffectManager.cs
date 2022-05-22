@@ -15,7 +15,7 @@ public class SolidEffectManager : MonoBehaviour
         me = GetComponent<GravitySolid>();
         player = me.getBody();
 
-        me.ActivateEffects += ActivateLaunchEffect;
+        me.LaunchEffects += ActivateLaunchEffect;
 
         me.ActivateHoldEffects += ActivateHoldEffect;
 

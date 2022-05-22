@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class EffectManager : MonoBehaviour
 {
@@ -6,27 +7,64 @@ public class EffectManager : MonoBehaviour
     private GravityObject me;
     private Rigidbody rbody;
 
+    private Transform perspective;
+
     private TrailRenderer launch_trail;
     [SerializeField] private ParticleSystem launch_effect; // in editor
     [SerializeField] private ParticleSystem hold_effect; // in editor
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         me = GetComponent<GravityObject>();
         rbody = me.getBody();
 
-        launch_trail = GetComponent<TrailRenderer>();
+        launch_trail = GetComponent<TrailRenderer>(); // WORK FROM HERE
+    }
 
+    IEnumerator Start()
+    {
+        yield return new WaitForEndOfFrame(); // wait a frame for the player cam to be loaded
+
+        foreach (Camera cam in Camera.allCameras)
+        {
+            if (cam.tag == "PlayerCamera")
+            {
+                perspective = cam.transform;
+
+                yield break;
+            }
+        }
+    }
+
+    // Start is called before the first frame update
+    void OnEnable()
+    {
         launch_trail.emitting = false;
 
-        me.ActivateEffects += ActivateLaunchEffect;
-        me.ActivateEffects += ActivateLaunchTrail;
-        me.ActivateEffects += DeactivateHoldEffect;
+        me.LaunchEffects += ActivateLaunchEffect;
+        me.LaunchEffects += ActivateLaunchTrail;
+        me.LaunchEffects += DeactivateHoldEffect;
 
         me.DeactivateHoldEffects += DeactivateHoldEffect;
 
         me.ActivateHoldEffects += ActivateHoldEffect;
+    }
+    void OnDisable() // includes OnDestroy
+    {
+        launch_trail.emitting = false;
+
+        Desubscribe();
+    }
+
+    private void Desubscribe()
+    {
+        me.LaunchEffects -= ActivateLaunchEffect;
+        me.LaunchEffects -= ActivateLaunchTrail;
+        me.LaunchEffects -= DeactivateHoldEffect;
+
+        me.DeactivateHoldEffects -= DeactivateHoldEffect;
+
+        me.ActivateHoldEffects -= ActivateHoldEffect;
     }
 
     // Update is called once per frame
@@ -38,20 +76,18 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-    void ActivateLaunchEffect(float l_force, Vector3 pos)
+    void ActivateLaunchEffect()
     {
-        var main = launch_effect.main;
+        Vector3 pos = rbody.position - perspective.position.normalized;
 
-        main.maxParticles = (int)(Mathf.Pow(2, (l_force / 50f) * 6.6438619f)); // the magic number is log base 2 of 100
-        
-        launch_effect.transform.SetPositionAndRotation(pos + (pos - Camera.main.transform.position).normalized, Quaternion.Euler(Camera.main.transform.eulerAngles));
+        launch_effect.transform.SetPositionAndRotation(pos, transform.rotation);
 
         launch_effect.Play();
     }
 
-    void ActivateLaunchTrail(float l_force, Vector3 pos ) => launch_trail.emitting = true;
+    void ActivateLaunchTrail() => launch_trail.emitting = true;
 
-    void DeactivateHoldEffect(float l_force, Vector3 pos) => hold_effect.Stop();
+    void DeactivateHoldEffect() => hold_effect.Stop();
 
     void ActivateHoldEffect() => hold_effect.Play();
 }

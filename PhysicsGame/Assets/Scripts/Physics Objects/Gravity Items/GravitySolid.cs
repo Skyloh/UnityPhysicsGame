@@ -2,13 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class GravitySolid : GravityObject
 {
-    private const float ATTRACTION = 8f;
-
-    private const float TERMINAL_VELO = 500f;
-
     private Vector3 collision_point;
 
     public override void Awake()
@@ -46,13 +41,13 @@ public class GravitySolid : GravityObject
     {
         do_attraction = false;
 
-        Vector3 l_force = -Camera.main.transform.forward * l_s;
+        Vector3 l_force = (0.25f * -direction + transform.up) * l_s;
 
         target_body.AddForce(l_force, ForceMode.Impulse);
 
         duration_of_attraction = 0;
 
-        ActivateEffects(l_s, target_body.position);
+        LaunchEffects();
     }
 
     public override void Released()

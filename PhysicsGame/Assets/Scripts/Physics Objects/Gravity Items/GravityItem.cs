@@ -40,7 +40,7 @@ public class GravityItem : GravityObject
 
         duration_of_attraction = 0;
 
-        ActivateEffects(l_s, target_body.position);
+        LaunchEffects();
     }
 
 }

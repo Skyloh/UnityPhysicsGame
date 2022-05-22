@@ -28,6 +28,8 @@ public class GravityControl : MonoBehaviour
     private GravityObject target; // what are we targeting now?
     private Transform linked_camera_transform; // this is the player's perspective camera.
 
+    RaycastHit data; // raycast cache
+
     // this is just a setter for a private field
     public void PassCameraTransform(Transform camera)
     {
@@ -42,53 +44,47 @@ public class GravityControl : MonoBehaviour
         {
             target.Released(); // drop it :>
 
-            AssignTarget(null);
+            target = null;
 
             actionState = 0;
 
             return;
         }
 
-        RaycastHit data;
-
         if (Physics.Raycast(transform.position + transform.up * 2, linked_camera_transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
         {
-            AssignTarget(data.collider.gameObject.GetComponent<GravityObject>());
+            target = data.collider.gameObject.GetComponent<GravityObject>();
 
             target?.Attract();
 
             actionState = 1;
         }
-
     }
 
     public void RClick()
     {
         StopCoroutine(SetAfterDelay());
 
-        RaycastHit data;
-
         // apply the launch force to the thing we're looking at without respect to its velo.
         if (Physics.Raycast(transform.position + transform.up * 2, linked_camera_transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
         {
+            target = data.collider.gameObject.GetComponent<GravityObject>();
+
             actionState = 2;
 
-            GravityObject to_be_launched = data.collider.gameObject.GetComponent<GravityObject>();
-
-            // do i need these optionals?
-            to_be_launched?.Released(); // ISSUE: do i need this?
-
-            to_be_launched?.Launch(POWER, false, linked_camera_transform.TransformDirection(Vector3.forward));
-
-            AssignTarget(null);
-
             StartCoroutine(SetAfterDelay());
-        }
-    }
 
-    private void AssignTarget(GravityObject target)
-    {
-        this.target = target;
+            // graphical effects here
+
+            if (target != null)
+            {
+                target.Released();
+
+                target.Launch(POWER, false, linked_camera_transform.TransformDirection(Vector3.forward));
+
+                target = null;
+            }
+        }
     }
 
     public int getActionID()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GravityObject : MonoBehaviour
 {
@@ -11,13 +12,13 @@ public class GravityObject : MonoBehaviour
 
     protected bool do_attraction = false;
 
-    public delegate void OnLaunch(float launch_force, Vector3 pos);
-    public OnLaunch ActivateEffects;
+    public delegate void OnLaunch();
+    public OnLaunch LaunchEffects;
 
     public delegate void OnHold();
     public OnHold ActivateHoldEffects;
 
-    public delegate void OnDrop(float launch_force, Vector3 pos); // scuffed
+    public delegate void OnDrop(); // scuffed
     public OnDrop DeactivateHoldEffects;
 
     public virtual void Awake()
@@ -56,28 +57,24 @@ public class GravityObject : MonoBehaviour
 
     public virtual void Attract()
     {
-        do_attraction = true;
+        do_attraction = is_attracted = true;
 
-        target_body.useGravity = false;
-
-        is_attracted = true;
+        target_body.useGravity = is_held = false;
 
         ActivateHoldEffects();
     }
 
     public virtual void Released()
     {
-        do_attraction = false;
+        do_attraction = is_held = is_attracted = false;
 
-        is_held = false;
-        
-        target_body.AddForce(-target_body.velocity * 5f);
-        
         target_body.useGravity = true;
+
+        target_body.AddForce(-target_body.velocity * 5f);
 
         duration_of_attraction = 0;
 
-        DeactivateHoldEffects(0f, Vector3.zero);
+        DeactivateHoldEffects();
     }
 
     public int getID()
