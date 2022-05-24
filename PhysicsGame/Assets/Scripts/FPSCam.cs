@@ -27,7 +27,7 @@ public class FPSCam : MonoBehaviour
         xRotation += input.y / SENSITIVITY;
         xRotation = Mathf.Clamp(xRotation, -85f, 85f);
 
-        zRotation -= input.x / (SENSITIVITY*2f); 
+        zRotation = (zRotation - (input.x / (SENSITIVITY*2f))) % 360; 
 
         transform.rotation = Quaternion.Euler(-xRotation, -zRotation, 0); // used to be localRotation when the camera was not child of PlayerCharacter
     }

@@ -9,8 +9,8 @@ public class GravityControl : MonoBehaviour
     // little comments on this one because the whole suite of gravity implementations is due for
     // a little bit of a massive overhaul.
 
-    private const float RAYCAST_RANGE = 30f; // changes how far we can attract/repel objects
-    private const float POWER = 25f; // obvious
+    private const float RAYCAST_RANGE = 15f; // changes how far we can attract/repel objects
+    private const float POWER = 14f; // obvious
     private const int LAYER_MASK = (1 << 10); // is this even right anymore idk
 
     private int action_state = 0; // stores the value of what action was just done so that the AnimControllers can handle it
@@ -27,8 +27,12 @@ public class GravityControl : MonoBehaviour
 
     private GravityObject target; // what are we targeting now?
     private Transform linked_camera_transform; // this is the player's perspective camera.
+    private Vector3 dir;
 
     RaycastHit data; // raycast cache
+
+    public delegate void BeamEffect(bool type, Vector3 direction, float distance); // true = attracting, false = repel
+    public BeamEffect TriggerVSFXs;
 
     // this is just a setter for a private field
     public void PassCameraTransform(Transform camera)
@@ -39,6 +43,8 @@ public class GravityControl : MonoBehaviour
     public void LClick()
     {
         StopCoroutine(SetAfterDelay());
+
+        dir = linked_camera_transform.TransformDirection(Vector3.forward);
 
         if (target != null) // if we already have something grabbed
         {
@@ -51,22 +57,33 @@ public class GravityControl : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(transform.position + transform.up * 2, linked_camera_transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
+        if (Physics.Raycast(transform.position + transform.up * 2, dir, out data, RAYCAST_RANGE, LAYER_MASK))
         {
+            TriggerVSFXs(true, dir, data.distance);
+
             target = data.collider.gameObject.GetComponent<GravityObject>();
 
             target?.Attract();
 
             actionState = 1;
         }
+
+        else
+        {
+            TriggerVSFXs(true, dir, RAYCAST_RANGE);
+        }
+
+        data.distance = RAYCAST_RANGE;
     }
 
     public void RClick()
     {
         StopCoroutine(SetAfterDelay());
 
+        dir = linked_camera_transform.TransformDirection(Vector3.forward);
+
         // apply the launch force to the thing we're looking at without respect to its velo.
-        if (Physics.Raycast(transform.position + transform.up * 2, linked_camera_transform.TransformDirection(Vector3.forward), out data, RAYCAST_RANGE, LAYER_MASK))
+        if (Physics.Raycast(transform.position + transform.up * 2, dir, out data, RAYCAST_RANGE, LAYER_MASK))
         {
             target = data.collider.gameObject.GetComponent<GravityObject>();
 
@@ -74,17 +91,19 @@ public class GravityControl : MonoBehaviour
 
             StartCoroutine(SetAfterDelay());
 
-            // graphical effects here
+            TriggerVSFXs(false, dir, data.distance);
 
             if (target != null)
             {
                 target.Released();
 
-                target.Launch(POWER, false, linked_camera_transform.TransformDirection(Vector3.forward));
+                target.Launch(POWER, false, dir);
 
                 target = null;
             }
         }
+
+        data.distance = RAYCAST_RANGE;
     }
 
     public int getActionID()

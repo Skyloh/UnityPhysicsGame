@@ -16,13 +16,9 @@ public class SPC : MonoBehaviour
 
     private PlayerSM PlayerStateManager;
 
-    private Transform tracked;
-
     private void Start()
     {
         linked_camera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<FPSCam>();
-
-        tracked = GameObject.FindGameObjectWithTag("Neck").transform;
 
         GController = GetComponent<GravityControl>();
         GController.PassCameraTransform(linked_camera.transform);

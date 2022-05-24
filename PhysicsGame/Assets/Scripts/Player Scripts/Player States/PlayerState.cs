@@ -18,7 +18,7 @@ public class PlayerState
     protected const float MAX_RESULTANT_GROUND_VELO = 5f; // the max groundspeed the character can apply to themselves
     protected const float MAX_RESULTANT_AIR_VELO = 6f; // the max airspeed the character can apply to themselves (before custom drag sets in)
     protected const float JUMP_FORCE = 8f; // self-explanatory
-    protected const int PREJUMP_DURATION = 5;
+    protected const int PREJUMP_DURATION = 3;
     protected const int AL_MASK = 1 << 11; // bit layer mask shifted to only target ActionableTerrain layer objects
     protected const float RAYCAST_LENGTH = 0.09f; // self-explanatory
     protected const float MAX_INCLINE_DOT = 0.4f; // the max dot product for a slope to warrant movement aid

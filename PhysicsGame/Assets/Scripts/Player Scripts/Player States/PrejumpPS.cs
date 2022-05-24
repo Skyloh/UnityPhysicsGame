@@ -49,7 +49,7 @@ public class PrejumpPS : PlayerState
         {
             Vector3 movement = transform.right * current_input.x + transform.forward * current_input.y; // i allow more lateral movement here (no 0.5 modifier). why?
 
-            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * initial_velo, ForceMode.Impulse); // WOOOOO FORCEMODE.IMPULSEEEEE
+            rbody.AddForce(Vector3.up * JUMP_FORCE + movement * initial_velo * 0.75f, ForceMode.Impulse); // WOOOOO FORCEMODE.IMPULSEEEEE
 
             StateLibrary.library.PlayerStateMachine.SwapState("AirbornePS"); // since we dont need to check for isGrounded, we manually swap to airborne.
         }

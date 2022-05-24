@@ -6,14 +6,20 @@ public class GravitySolid : GravityObject
 {
     private Vector3 collision_point;
 
+    private Vector3 launch_dir;
+
+    [SerializeField] bool fixed_angle;
+
     public override void Awake()
     {
+        is_solid = true;
+
         target_body = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(is_attracted && collision.gameObject.tag == "Player")
         {
             is_held = true;
             is_attracted = false;
@@ -39,15 +45,22 @@ public class GravitySolid : GravityObject
 
     public override void Launch(float l_s, bool with_curr_velo, Vector3 direction)
     {
-        do_attraction = false;
+        if (being_launched)
+        {
+            return;
+        }
 
-        Vector3 l_force = (0.25f * -direction + transform.up) * l_s;
+        launch_dir = fixed_angle ? 0.25f * -direction + transform.up : -direction;
+
+        Vector3 l_force = launch_dir * l_s;
 
         target_body.AddForce(l_force, ForceMode.Impulse);
 
         duration_of_attraction = 0;
 
         LaunchEffects();
+
+        being_launched = true;
     }
 
     public override void Released()

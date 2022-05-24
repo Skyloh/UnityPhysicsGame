@@ -16,13 +16,27 @@ public class EffectManager : MonoBehaviour
     private void Awake()
     {
         me = GetComponent<GravityObject>();
-        rbody = me.getBody();
-
-        launch_trail = GetComponent<TrailRenderer>(); // WORK FROM HERE
     }
 
     IEnumerator Start()
     {
+        if (me.is_solid)
+        {
+            GameObject player_cache = GameObject.FindGameObjectWithTag("Player");
+
+            rbody = player_cache.GetComponent<Rigidbody>();
+
+            launch_trail = player_cache.GetComponent<TrailRenderer>();
+
+        }
+
+        else
+        {
+            rbody = me.getBody();
+
+            launch_trail = GetComponent<TrailRenderer>();
+        }
+
         yield return new WaitForEndOfFrame(); // wait a frame for the player cam to be loaded
 
         foreach (Camera cam in Camera.allCameras)
@@ -30,20 +44,21 @@ public class EffectManager : MonoBehaviour
             if (cam.tag == "PlayerCamera")
             {
                 perspective = cam.transform;
-
+                
                 yield break;
             }
         }
+
     }
 
     // Start is called before the first frame update
     void OnEnable()
     {
-        launch_trail.emitting = false;
-
         me.LaunchEffects += ActivateLaunchEffect;
         me.LaunchEffects += ActivateLaunchTrail;
         me.LaunchEffects += DeactivateHoldEffect;
+
+        me.StopLaunchEffects += DeactivateLaunchEffect;
 
         me.DeactivateHoldEffects += DeactivateHoldEffect;
 
@@ -51,8 +66,6 @@ public class EffectManager : MonoBehaviour
     }
     void OnDisable() // includes OnDestroy
     {
-        launch_trail.emitting = false;
-
         Desubscribe();
     }
 
@@ -62,32 +75,32 @@ public class EffectManager : MonoBehaviour
         me.LaunchEffects -= ActivateLaunchTrail;
         me.LaunchEffects -= DeactivateHoldEffect;
 
+        me.StopLaunchEffects -= DeactivateLaunchEffect;
+
         me.DeactivateHoldEffects -= DeactivateHoldEffect;
 
         me.ActivateHoldEffects -= ActivateHoldEffect;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if ((launch_trail.emitting && rbody.velocity.magnitude < 0.05f) || me.beingInteractedWith())
-        {
-            launch_trail.emitting = false;
-        }
-    }
-
     void ActivateLaunchEffect()
     {
-        Vector3 pos = rbody.position - perspective.position.normalized;
+        Vector3 pos = me.is_solid ? perspective.position : rbody.position - perspective.position.normalized;
 
         launch_effect.transform.SetPositionAndRotation(pos, transform.rotation);
 
         launch_effect.Play();
     }
 
+    void DeactivateLaunchEffect() => launch_trail.emitting = false;
+
     void ActivateLaunchTrail() => launch_trail.emitting = true;
 
     void DeactivateHoldEffect() => hold_effect.Stop();
 
-    void ActivateHoldEffect() => hold_effect.Play();
+    void ActivateHoldEffect()
+    {
+        //hold_effect.transform.LookAt(transform.position + transform.forward);
+
+        hold_effect.Play();
+    }
 }

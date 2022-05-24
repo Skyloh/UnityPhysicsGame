@@ -92,9 +92,9 @@ public class AirbornePS : PlayerState
 
 
             // general air movement stuff
-            movement = transform.right * current_input.x * 0.5f + transform.forward * current_input.y;
+            movement = transform.right * current_input.x * 2f + transform.forward * current_input.y * 2f;
 
-            rbody.AddForce(movement * MOVE_SPEED * 0.2f * Time.deltaTime, ForceMode.Force); // allows for >>subtle<< air movement
+            rbody.AddForce(movement * MOVE_SPEED * Time.deltaTime, ForceMode.Force); // allows for >>subtle<< air movement
 
             // ignore Y velo because we dont care about limiting rising/falling speed.
             // probably really suboptimal to define my own method of this 2d pythag but stfu future goon

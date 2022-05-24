@@ -3,36 +3,44 @@ using System.Collections;
 
 public class GravityObject : MonoBehaviour
 {
+    public bool is_solid;
 
     protected Rigidbody target_body;
 
     protected bool is_attracted = false;
     protected bool is_held = false;
-    protected int duration_of_attraction = 0; // increases over time when being attracted
+    protected bool being_launched = false;
 
-    protected bool do_attraction = false;
+    protected int duration_of_attraction = 0; // increases over time when being attracted
 
     public delegate void OnLaunch();
     public OnLaunch LaunchEffects;
 
+    public delegate void OnStop();
+    public OnStop StopLaunchEffects;
+
     public delegate void OnHold();
     public OnHold ActivateHoldEffects;
 
-    public delegate void OnDrop(); // scuffed
+    public delegate void OnDrop(); 
     public OnDrop DeactivateHoldEffects;
 
     public virtual void Awake()
     {
+        LaunchEffects += () => being_launched = true;
+
+        StopLaunchEffects += () => being_launched = false;
     }
 
     private void FixedUpdate()
     {
-        if (!do_attraction)
+        if (being_launched && (target_body.velocity.magnitude < 0.05f || beingInteractedWith()))
         {
-            return;
+            StopLaunchEffects();
+            being_launched = false;
         }
 
-        if (is_attracted)
+        else if (is_attracted)
         {
             AttractionUpdate();
         }
@@ -51,13 +59,14 @@ public class GravityObject : MonoBehaviour
     {
     }
 
+    // Release is called before Launch
     public virtual void Launch(float l_s, bool with_curr_velo, Vector3 direction)
     {
     }
 
     public virtual void Attract()
     {
-        do_attraction = is_attracted = true;
+        is_attracted = true;
 
         target_body.useGravity = is_held = false;
 
@@ -66,7 +75,7 @@ public class GravityObject : MonoBehaviour
 
     public virtual void Released()
     {
-        do_attraction = is_held = is_attracted = false;
+        is_held = is_attracted = false;
 
         target_body.useGravity = true;
 
@@ -92,5 +101,4 @@ public class GravityObject : MonoBehaviour
         return is_attracted || is_held;
     }
 
-    public virtual bool isTerminal() => target_body.velocity.magnitude > 500f;
 }
