@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FPSCam : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class FPSCam : MonoBehaviour
         zRotation = (zRotation - (input.x / (SENSITIVITY*2f))) % 360; 
 
         transform.rotation = Quaternion.Euler(-xRotation, -zRotation, 0); // used to be localRotation when the camera was not child of PlayerCharacter
+    }
+
+    public void AssignCameraToStack(Camera overlay)
+    {
+        var this_camera = GetComponent<Camera>().GetUniversalAdditionalCameraData();
+
+        this_camera.cameraStack.Add(overlay);
     }
 
 }

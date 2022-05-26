@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AnimationHandler : MonoBehaviour
 {
@@ -80,6 +81,10 @@ public class AnimationHandler : MonoBehaviour
             OverlayAnimController = GameObject.FindGameObjectWithTag("ArmAnimator").GetComponent<Animator>();
 
             UpdateAnimators(true); // run an init update
+
+            FPSCam cam_cache = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<FPSCam>();
+
+            cam_cache.AssignCameraToStack(Camera.main);
         }
     }
 

@@ -63,6 +63,13 @@ public class GravityControl : MonoBehaviour
 
             target = data.collider.gameObject.GetComponent<GravityObject>();
 
+            if (!target.enabled)
+            {
+                data.distance = RAYCAST_RANGE;
+
+                return;
+            }
+
             target?.Attract();
 
             actionState = 1;
@@ -93,7 +100,7 @@ public class GravityControl : MonoBehaviour
 
             TriggerVSFXs(false, dir, data.distance);
 
-            if (target != null)
+            if (target != null && target.enabled)
             {
                 target.Released();
 

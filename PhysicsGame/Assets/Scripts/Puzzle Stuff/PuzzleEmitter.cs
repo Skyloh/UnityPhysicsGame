@@ -18,9 +18,9 @@ public class PuzzleEmitter : MonoBehaviour
 
     [SerializeField] Transform PULSE_OBJECT;
 
-    private void Start()
+    private void OnEnable()
     {
-        if(linked.Count == 0)
+        if (linked.Count == 0)
         {
             Debug.LogError("A Puzzle Emitter has no linked objects!");
             gameObject.SetActive(false);
@@ -34,6 +34,24 @@ public class PuzzleEmitter : MonoBehaviour
         }
 
         StartCoroutine(EmitPulse(2f));
+    }
+
+    private void OnDisable()
+    {
+        if (linked.Count == 0)
+        {
+            Debug.LogError("A Puzzle Emitter has no linked objects!");
+            gameObject.SetActive(false);
+            return;
+        }
+
+        foreach (PuzzleReceiver pz in linked)
+        {
+            WhenPressed -= pz.Activate;
+            WhenReleased -= pz.Deactivate;
+        }
+
+        StopCoroutine(EmitPulse(0f));
     }
 
     private void OnTriggerEnter(Collider other)

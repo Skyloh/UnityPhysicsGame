@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GravitySolid : GravityObject
 {
-    private Vector3 collision_point;
+    private Vector3 collison_vector;
 
     private Vector3 launch_dir;
 
@@ -24,7 +22,7 @@ public class GravitySolid : GravityObject
             is_held = true;
             is_attracted = false;
 
-            collision_point = collision.transform.position;
+            collison_vector = collision.GetContact(0).point - transform.position; // transform.position - collision.transform.position;
         }
     }
 
@@ -37,8 +35,7 @@ public class GravitySolid : GravityObject
 
     public override void HeldUpdate()
     {
-        target_body.AddForce(-target_body.velocity * 15f);
-        target_body.position = Vector3.Lerp(collision_point, target_body.position, 0.125f);
+        target_body.position = Vector3.Lerp(target_body.position, collison_vector + transform.position, 0.125f);
 
         target_body.useGravity = false;
     }
@@ -67,7 +64,7 @@ public class GravitySolid : GravityObject
     {
         base.Released();
 
-        collision_point = Vector3.zero;
+        collison_vector = Vector3.zero;
     }
 
 }

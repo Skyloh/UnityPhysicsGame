@@ -9577,9 +9577,9 @@ GameObject:
   - component: {fileID: 6606765833288129635}
   - component: {fileID: 6606765833288129634}
   - component: {fileID: 6606765833288129637}
+  - component: {fileID: 8725443380938592514}
   - component: {fileID: 6606765833288129636}
   - component: {fileID: 6102965240758893969}
-  - component: {fileID: 8725443380938592514}
   m_Layer: 10
   m_Name: Solid
   m_TagString: MovingGameObject
@@ -9663,6 +9663,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.05, y: 1.05, z: 1.05}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8725443380938592514
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6606765833288129639}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &6606765833288129636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9691,19 +9707,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launch_effect: {fileID: 3734108192660533347}
   hold_effect: {fileID: 3326445852979641252}
---- !u!54 &8725443380938592514
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6606765833288129639}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
