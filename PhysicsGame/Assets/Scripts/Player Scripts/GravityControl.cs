@@ -63,7 +63,7 @@ public class GravityControl : MonoBehaviour
 
             target = data.collider.gameObject.GetComponent<GravityObject>();
 
-            if (!target.enabled)
+            if (target == null || !target.enabled)
             {
                 data.distance = RAYCAST_RANGE;
 

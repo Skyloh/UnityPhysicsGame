@@ -8,8 +8,11 @@ public class TransformAction : MonoBehaviour
     protected Vector3 to_value;
 
     [SerializeField] protected bool additive;
+    [SerializeField] protected bool ping_pong = true; // transform over and over if true, if false, transform once per Activation
 
     [SerializeField] protected float speed = 0.0125f;
+
+    [SerializeField] protected Transform TARGET; // leave NULL if targeting gameObject. Specify object for additional transforms.
 
     public virtual void Start()
     {

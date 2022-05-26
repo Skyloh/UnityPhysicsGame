@@ -10,7 +10,7 @@ TagManager:
   - ArmAnimator
   - Ledge
   - PlayerCamera
-  - MovingGameObject
+  - Button
   layers:
   - Default
   - TransparentFX

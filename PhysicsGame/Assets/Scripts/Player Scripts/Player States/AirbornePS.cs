@@ -42,7 +42,7 @@ public class AirbornePS : PlayerState
     private float GetActionRaycastDistance()
     {
         // send a raycast out in front and above the player to detect for any ledges from their mid-section to below (maybe idk)
-        Physics.Raycast(transform.position + transform.forward, Vector3.up * 3f, out ActionRaycastData, 1f, AL_MASK);
+        Physics.Raycast(transform.position + transform.forward * 0.5f, Vector3.up * 3f, out ActionRaycastData, 1f, AL_MASK);
         
         return (ActionRaycastData.collider != null) ? ActionRaycastData.transform.position.y : -5f; // -5f because at this raycast length, 5 is never a value
     }

@@ -6326,6 +6326,7 @@ GameObject:
   - component: {fileID: 615271226808224995}
   - component: {fileID: 4360200963959169978}
   - component: {fileID: 8722829454812300337}
+  - component: {fileID: 8712697602774936881}
   - component: {fileID: 7368871900532305327}
   - component: {fileID: 8754031723340904277}
   - component: {fileID: 4330556730560246530}
@@ -6493,6 +6494,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8712697602774936881}
+        m_MethodName: ButtonLClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: bc0d623c-c313-4aa8-9501-32d19b9e4c19
     m_ActionName: Basic/Interact[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -6592,6 +6604,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 371f42f9605f7164ea00be9f7bcc57a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8712697602774936881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218669699451240609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1958fa8c08593448f5dc7e725eaf73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7368871900532305327

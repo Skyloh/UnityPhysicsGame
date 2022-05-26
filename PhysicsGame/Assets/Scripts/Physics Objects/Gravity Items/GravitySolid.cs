@@ -35,8 +35,10 @@ public class GravitySolid : GravityObject
 
     public override void HeldUpdate()
     {
-        target_body.position = Vector3.Lerp(target_body.position, collison_vector + transform.position, 0.125f);
-
+        // InverseTransformVector takes the offset vector (which is originally just in world space) and converts it to what the offset
+        // would be in local space for the Solid. The solid's position is then added, giving the real offset position (with rotation).
+        target_body.position = Vector3.Lerp(target_body.position, transform.InverseTransformVector(collison_vector) + transform.position, 0.125f);
+        
         target_body.useGravity = false;
     }
 

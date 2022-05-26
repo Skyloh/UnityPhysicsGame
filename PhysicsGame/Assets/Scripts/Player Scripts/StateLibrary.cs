@@ -17,6 +17,7 @@ public class StateLibrary : MonoBehaviour
     public WallGrabPS WallGrabState;
     public WallDropPS WallDropState;
     public WallGetupPS WallGetupState;
+    public ButtonPressPS ButtonPressState;
 
     private Queue<PlayerState> guard_exit_toggle_queue = new Queue<PlayerState>();
 
@@ -36,6 +37,7 @@ public class StateLibrary : MonoBehaviour
         WallGrabState = new WallGrabPS(Vector2.zero, player_transform, player_rb);
         WallDropState = new WallDropPS(Vector2.zero, player_transform, player_rb);
         WallGetupState = new WallGetupPS(Vector2.zero, player_transform, player_rb);
+        ButtonPressState = new ButtonPressPS(Vector2.zero, player_transform, player_rb);
     }
 
     // why do i even have this if i made every state public level access??????????????
@@ -81,6 +83,9 @@ public class StateLibrary : MonoBehaviour
                 StartCoroutine(DisableGuardExitWithDelay());
 
                 return WallGetupState;
+
+            case "ButtonPressPS":
+                return ButtonPressState;
 
             default:
                 Debug.LogError("Did you mess up the string query? lmao stupid idiot maybe be better next time (cringe): " + search);

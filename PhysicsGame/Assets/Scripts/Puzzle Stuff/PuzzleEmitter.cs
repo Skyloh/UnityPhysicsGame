@@ -7,19 +7,25 @@ public class PuzzleEmitter : MonoBehaviour
     [SerializeField] private List<PuzzleReceiver> linked = new List<PuzzleReceiver>();
     int index = 0;
 
-    private delegate void OnActivation();
-    private OnActivation WhenPressed;
+    [SerializeField] protected bool once_toggle = false; // you need to activate this emitter only once.
 
-    private delegate void OnDeactivation();
-    private OnDeactivation WhenReleased;
+    protected delegate void OnActivation();
+    protected OnActivation WhenPressed;
 
-    [SerializeField] Transform animated_object;
-    int loops = 50;
+    protected delegate void OnDeactivation();
+    protected OnDeactivation WhenReleased;
 
-    [SerializeField] Transform PULSE_OBJECT;
+    [SerializeField] protected Transform animated_object;
+    protected int loops = 50;
+
+    [SerializeField] ParticleSystem PULSE_SYSTEM;
+    Transform PULSE_OBJECT;
+
 
     private void OnEnable()
     {
+        PULSE_OBJECT = PULSE_SYSTEM.transform;
+
         if (linked.Count == 0)
         {
             Debug.LogError("A Puzzle Emitter has no linked objects!");
@@ -54,43 +60,21 @@ public class PuzzleEmitter : MonoBehaviour
         StopCoroutine(EmitPulse(0f));
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual IEnumerator ActivationAnimation()
     {
-        WhenPressed();
-        StartCoroutine(ActivationAnimation());
+        yield break;
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual IEnumerator DeactivationAnimation()
     {
-        WhenReleased();
-        StartCoroutine(DeactivationAnimation());
+        yield break;
     }
 
-    protected IEnumerator ActivationAnimation()
-    {
-        for (int i = 0; i < loops; i++)
-        {
-            animated_object.position = Vector3.Lerp(animated_object.position, animated_object.position - transform.up * 0.25f, 0.0125f);
-
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    protected IEnumerator DeactivationAnimation()
-    {
-        for (int i = 0; i < loops; i++)
-        {
-            animated_object.position = Vector3.Lerp(animated_object.position, animated_object.position + transform.up * 0.25f, 0.0125f);
-
-            yield return new WaitForEndOfFrame();
-        }
-    }
-
-    protected IEnumerator EmitPulse(float delay)
+    private IEnumerator EmitPulse(float delay)
     {
         while (gameObject.activeInHierarchy)
         {
-            PULSE_OBJECT.gameObject.SetActive(true);
+            PULSE_SYSTEM.gameObject.SetActive(true);
 
             PULSE_OBJECT.position = transform.position;
             PULSE_OBJECT.LookAt(transform.position + transform.up);
@@ -102,9 +86,10 @@ public class PuzzleEmitter : MonoBehaviour
             {
                 PULSE_OBJECT.position = Vector3.Lerp(PULSE_OBJECT.position, destination, 0.0125f);
                 
-
                 yield return new WaitForEndOfFrame();
             }
+
+            PULSE_SYSTEM.TriggerSubEmitter(0);
 
             yield return new WaitForSeconds(2f);
 

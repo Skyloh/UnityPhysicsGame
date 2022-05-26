@@ -16,9 +16,7 @@ public class PRTransform : PuzzleReceiver
 
         if (to_enable != null)
         {
-            to_enable.enabled = false;
-
-            Hand_Sigil.SetFloat("_IsActive", 0f);
+            GravitySolidExclusive(0f);
         }
 
         transformActions = new List<TransformAction>(GetComponents<TransformAction>());
@@ -27,15 +25,21 @@ public class PRTransform : PuzzleReceiver
         
     }
 
+    private void OnDisable()
+    {
+        if (to_enable != null)
+        {
+            Hand_Sigil.SetFloat("_IsActive", 0f);
+        }
+    }
+
     public override void Activate()
     {
         base.Activate();
 
         if (to_enable != null)
         {
-            to_enable.enabled = true;
-
-            Hand_Sigil.SetFloat("_IsActive", 1f);
+            GravitySolidExclusive(1f);
         }
 
         if (has_transforms)
@@ -50,14 +54,19 @@ public class PRTransform : PuzzleReceiver
 
         if (to_enable != null)
         {
-            to_enable.enabled = false;
-
-            Hand_Sigil.SetFloat("_IsActive", 0f);
+            GravitySolidExclusive(0f);
         }
 
         if (has_transforms)
         {
             transformActions.ForEach((TransformAction ta) => ta.ToggleDoTransform(false));
         }
+    }
+
+    private void GravitySolidExclusive(float input_float)
+    {
+        to_enable.enabled = input_float == 1f;
+
+        Hand_Sigil.SetFloat("_IsActive", input_float);
     }
 }

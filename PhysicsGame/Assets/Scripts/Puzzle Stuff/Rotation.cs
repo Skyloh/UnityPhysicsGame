@@ -5,11 +5,11 @@ public class Rotation : TransformAction
 {
     public override void Start()
     {
-        origin = transform.eulerAngles;
+        origin = TARGET.eulerAngles;
 
         if (additive)
         {
-            destination += transform.eulerAngles;
+            destination += TARGET.eulerAngles;
         }
 
         to_value = destination;
@@ -17,9 +17,9 @@ public class Rotation : TransformAction
 
     public override IEnumerator DoTransform()
     {
-        while (Vector3.Distance(transform.eulerAngles, to_value) > 5f)
+        while (Vector3.Distance(TARGET.eulerAngles, to_value) > 1f)
         {
-            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, to_value, speed);
+            TARGET.eulerAngles = Vector3.Lerp(TARGET.eulerAngles, to_value, speed);
 
             yield return new WaitForEndOfFrame();
         }
@@ -27,6 +27,11 @@ public class Rotation : TransformAction
         yield return new WaitForSeconds(1f);
 
         to_value = to_value == destination ? origin : destination;
+
+        if (!ping_pong)
+        {
+            yield break;
+        }
 
         StartCoroutine(DoTransform());
     }

@@ -5,11 +5,16 @@ public class Translate : TransformAction
 {
     public override void Start()
     {
-        origin = transform.position;
+        if (TARGET == null)
+        {
+            TARGET = transform;
+        }
+
+        origin = TARGET.position;
 
         if (additive)
         {
-            destination += transform.position;
+            destination += TARGET.position;
         }
 
         to_value = destination;
@@ -17,9 +22,9 @@ public class Translate : TransformAction
 
     public override IEnumerator DoTransform()
     {
-        while (Vector3.Distance(transform.position, to_value) > 1f)
+        while (Vector3.Distance(TARGET.position, to_value) > 1f)
         {
-            transform.position = Vector3.Lerp(transform.position, to_value, speed);
+            TARGET.position = Vector3.Lerp(TARGET.position, to_value, speed);
 
             yield return new WaitForEndOfFrame();
         }
@@ -27,6 +32,11 @@ public class Translate : TransformAction
         yield return new WaitForSeconds(1f);
 
         to_value = to_value == destination ? origin : destination;
+
+        if (!ping_pong)
+        {
+            yield break;
+        }
 
         StartCoroutine(DoTransform());
     }
