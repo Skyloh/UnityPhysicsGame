@@ -8,9 +8,10 @@ TagManager:
   - Gravity Core
   - Neck
   - ArmAnimator
-  - Ledge
   - PlayerCamera
   - Button
+  - LoadingUIText
+  - SceneHub
   layers:
   - Default
   - TransparentFX

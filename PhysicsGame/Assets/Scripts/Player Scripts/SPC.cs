@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 // Simple Player Controller
 // manages state machines
@@ -15,6 +16,24 @@ public class SPC : MonoBehaviour
     private GravityControl GController;
 
     private PlayerSM PlayerStateManager;
+
+    private void OnEnable()
+    {
+        SceneLoadTrigger.WhenSceneChangeStarted += LockAll;
+    }
+    private void OnDisable()
+    {
+        SceneLoadTrigger.WhenSceneChangeStarted -= LockAll;
+    }
+
+    private IEnumerator LockAll()
+    {
+        PlayerStateManager.SwapState("IdlePS");
+
+        GetComponent<PlayerInput>().enabled = false;
+
+        yield return null;
+    }
 
     private void Start()
     {

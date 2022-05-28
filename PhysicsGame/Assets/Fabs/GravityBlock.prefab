@@ -9581,6 +9581,7 @@ GameObject:
   - component: {fileID: 738710970416369658}
   - component: {fileID: 1629465003980933082}
   - component: {fileID: 4148415278215126176}
+  - component: {fileID: 3582661921296619138}
   m_Layer: 10
   m_Name: GravityBlock
   m_TagString: Untagged
@@ -9630,7 +9631,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 237d649120176d74397363dd32b75f0e, type: 2}
+  - {fileID: 2100000, guid: 3aa95e7d53771544390c63f80b98425a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9813,3 +9814,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_solid: 0
+--- !u!114 &3582661921296619138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8663788146460720185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532441f6a355cc549976855f324807d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

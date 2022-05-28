@@ -6,7 +6,9 @@ public class PRTransform : PuzzleReceiver
 {
     [SerializeField] GravitySolid to_enable; // leave this null if the gameobject is just to move
 
-    [SerializeField] Material Hand_Sigil; // same with this
+    [SerializeField] GameObject Hand_Sigil_OBJ; // same with this
+
+    Material Hand_Sigil;
 
     List<TransformAction> transformActions;
     bool has_transforms;
@@ -66,6 +68,8 @@ public class PRTransform : PuzzleReceiver
     private void GravitySolidExclusive(float input_float)
     {
         to_enable.enabled = input_float == 1f;
+
+        Hand_Sigil = Hand_Sigil_OBJ.GetComponent<Renderer>().material;
 
         Hand_Sigil.SetFloat("_IsActive", input_float);
     }
