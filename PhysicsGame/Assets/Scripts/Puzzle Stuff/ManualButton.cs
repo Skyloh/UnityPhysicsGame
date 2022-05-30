@@ -57,5 +57,7 @@ public class ManualButton : PuzzleEmitter
 
             yield return new WaitForEndOfFrame();
         }
+
+        has_been_pressed = false;
     }
 }

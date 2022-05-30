@@ -20,7 +20,7 @@ public class TransformAction : MonoBehaviour
 
     public void ToggleDoTransform(bool on_off)
     {
-        StopAllCoroutines();
+        //StopAllCoroutines(); 
 
         if (on_off)
         {

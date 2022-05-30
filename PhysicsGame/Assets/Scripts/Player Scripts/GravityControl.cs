@@ -40,6 +40,11 @@ public class GravityControl : MonoBehaviour
         linked_camera_transform = camera;
     }
 
+    private void OnEnable()
+    {
+        target = null;
+    }
+
     public void LClick()
     {
         StopCoroutine(SetAfterDelay());

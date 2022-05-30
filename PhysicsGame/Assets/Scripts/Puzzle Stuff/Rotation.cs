@@ -5,6 +5,11 @@ public class Rotation : TransformAction
 {
     public override void Start()
     {
+        if (TARGET == null)
+        {
+            TARGET = transform;
+        }
+
         origin = TARGET.eulerAngles;
 
         if (additive)
@@ -24,7 +29,7 @@ public class Rotation : TransformAction
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         to_value = to_value == destination ? origin : destination;
 

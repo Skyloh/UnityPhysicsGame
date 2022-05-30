@@ -40,4 +40,11 @@ public class FPSCam : MonoBehaviour
         this_camera.cameraStack.Add(overlay);
     }
 
+    public void ClearStack()
+    {
+        var this_camera = GetComponent<Camera>().GetUniversalAdditionalCameraData();
+
+        this_camera.cameraStack.Clear();
+    }
+
 }

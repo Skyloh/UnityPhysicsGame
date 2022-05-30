@@ -52,12 +52,14 @@ public class AnimationHandler : MonoBehaviour
     {
         UpdateAnimators += UpdateParameters;
         SceneManager.sceneLoaded += OnOverlaySceneLoaded;
+        SceneManager.sceneUnloaded += OnOverlaySceneUnloaded;
     }
 
     void OnDisable() // no memory leaks here nosiree
     {
         UpdateAnimators -= UpdateParameters;
         SceneManager.sceneLoaded -= OnOverlaySceneLoaded;
+        SceneManager.sceneUnloaded -= OnOverlaySceneUnloaded;
     }
 
     public void Start()
@@ -85,6 +87,16 @@ public class AnimationHandler : MonoBehaviour
             FPSCam cam_cache = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<FPSCam>();
 
             cam_cache.AssignCameraToStack(Camera.main);
+        }
+    }
+
+    private void OnOverlaySceneUnloaded(Scene overlay)
+    {
+        if (overlay.buildIndex == 1)
+        {
+            FPSCam cam_cache = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<FPSCam>();
+
+            cam_cache.ClearStack();
         }
     }
 

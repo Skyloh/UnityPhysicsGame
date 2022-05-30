@@ -7,7 +7,7 @@ public class PlayerBeamEffect : MonoBehaviour
     [SerializeField] ParticleSystem.MinMaxGradient RED_START;
     [SerializeField] ParticleSystem.MinMaxGradient BLUE_START;
 
-    [SerializeField] Transform initial;
+    Transform initial;
 
     [SerializeField] GravityControl controller;
 
@@ -21,6 +21,13 @@ public class PlayerBeamEffect : MonoBehaviour
         controller.TriggerVSFXs -= Fire;
     }
 
+    private void Start()
+    {
+        initial = GameObject.FindGameObjectWithTag("Player").transform;
+
+        transform.position = initial.position + Vector3.up * 2f;
+    }
+
     private void Fire(bool type, Vector3 direction, float distance)
     {
         ResetSystem();
@@ -31,10 +38,10 @@ public class PlayerBeamEffect : MonoBehaviour
 
         transform.LookAt(transform.position + direction);
 
-        StartCoroutine(MoveSystem(distance));
+        StartCoroutine(MoveSystem(distance, transform.forward));
     }
 
-    private IEnumerator MoveSystem(float distance)
+    private IEnumerator MoveSystem(float distance, Vector3 direction)
     {
         float traveled = 0f;
 
@@ -44,7 +51,7 @@ public class PlayerBeamEffect : MonoBehaviour
         {
             traveled += 1f;
 
-            transform.position += transform.forward;
+            transform.position += direction;
 
             yield return new WaitForEndOfFrame();
         }
@@ -54,8 +61,8 @@ public class PlayerBeamEffect : MonoBehaviour
 
     private void ResetSystem()
     {
-        StopCoroutine(MoveSystem(0f));
+        StopCoroutine(MoveSystem(0f, Vector3.zero));
         effect.Stop();
-        transform.position = initial.position;
+        transform.position = initial.position + Vector3.up * 2f;
     }
 }

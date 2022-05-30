@@ -24,18 +24,17 @@ public class SceneLoadTrigger : MonoBehaviour
     }
 
     private IEnumerator StartLoadScene()
-    {
-        // i hate having to use so many tags.
-        SceneChangeScript master = GameObject.FindGameObjectWithTag("SceneHub").GetComponent<SceneChangeScript>();
-        
+    {   
         foreach (StartSceneChange effect in WhenSceneChangeStarted.GetInvocationList())
         {
-            
-            Debug.Log("DO THE THING");
             yield return StartCoroutine(effect.Invoke());
         }
 
         yield return new WaitForSeconds(1f);
+
+        // i hate having to use so many tags.
+
+        SceneChangeScript master = GameObject.FindGameObjectWithTag("SceneHub").GetComponent<SceneChangeScript>();
 
         master.ChangeScene(loadSceneName);
     }

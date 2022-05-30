@@ -13,6 +13,8 @@ public class PuzzleReceiver : MonoBehaviour
     public virtual void Activate()
     {
         is_active = true;
+
+        PeekCameraScript.instance.Goto(transform);
     }
 
     public virtual void Deactivate()

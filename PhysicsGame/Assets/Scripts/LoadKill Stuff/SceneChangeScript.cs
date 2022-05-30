@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -6,20 +7,39 @@ using TMPro;
 public class SceneChangeScript : MonoBehaviour
 {
 
-    TextMeshPro tmp;
+    [SerializeField] List<string> fake_code_functions;
+
+    TextMeshProUGUI tmp;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+    }
 
+    private void OnEnable()
+    {
         SceneManager.sceneLoaded += GetTextElement;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= GetTextElement;
     }
 
     void GetTextElement(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LoadingScene")
+        if (scene.name != "LoadingScene")
         {
-            tmp = GameObject.FindGameObjectWithTag("LoadingUIText").GetComponent<TextMeshPro>();
+            return;
+        }
+
+        foreach (GameObject go in scene.GetRootGameObjects())
+        {
+            if (go.CompareTag("LoadingUIText"))
+            {
+                tmp = go.GetComponentInChildren<TextMeshProUGUI>();
+                return;
+            }
         }
     }
 
@@ -32,26 +52,29 @@ public class SceneChangeScript : MonoBehaviour
     {
         SceneManager.LoadScene("LoadingScene", LoadSceneMode.Single);
 
-        AsyncOperation load = SceneManager.LoadSceneAsync(build_name, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => tmp != null); // bc GetTextElement still needs to run
+
+        AsyncOperation load = SceneManager.LoadSceneAsync(build_name, LoadSceneMode.Single);
 
         load.allowSceneActivation = false;
-
-        yield return new WaitUntil(() => tmp != null); // bc GetTextElement still needs to run
 
         while (!(load.progress >= 0.9f))
         {
             tmp.SetText("{0:2}%", load.progress);
-            // text = (load.progress * 110f) + "%";
+
+            yield return new WaitForEndOfFrame();
         }
 
-        tmp.SetText("Finishing...");
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.UnloadSceneAsync("LoadingScene");
+        foreach (string s in fake_code_functions)
+        {
+            tmp.SetText(s);
+            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+        }
 
         load.allowSceneActivation = true;
 
-        tmp = null;
+        yield return new WaitUntil(() => load.isDone);
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(build_name));
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class OverlayScript : MonoBehaviour
 {
     [SerializeField] Image alphaToLerp;
+    [SerializeField] RawImage peekToDisable;
     [SerializeField] List<GameObject> arms;
     Material lArmMaterial;
     Material rArmMaterial;
@@ -41,12 +42,18 @@ public class OverlayScript : MonoBehaviour
     {
         SceneLoadTrigger.WhenSceneChangeStarted += ProcessOut;
         SceneLoadTrigger.WhenSceneChangeStarted += FadeToBlack;
+
+        PeekCameraScript.instance.OnDisable += DisableRawImage;
+        PeekCameraScript.instance.OnEnable += EnableRawImage;
     }
 
     private void OnDestroy()
     {
         SceneLoadTrigger.WhenSceneChangeStarted -= ProcessOut;
         SceneLoadTrigger.WhenSceneChangeStarted -= FadeToBlack;
+
+        PeekCameraScript.instance.OnDisable -= DisableRawImage;
+        PeekCameraScript.instance.OnEnable -= EnableRawImage;
     }
 
     private IEnumerator Start() // called automatically when scene instance is loaded (but after awake so we dont get a nullref).
@@ -78,28 +85,47 @@ public class OverlayScript : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
 
-        alphaToLerp.gameObject.SetActive(false);
+        // object is immediately unloaded when scene changes to loadscene, so I dont need
+        // to set it to inactive state.
     }
 
-    private IEnumerator ProcessOut()
+    private IEnumerator ProcessOut() // contains both bc of really weird coroutine things
     {
         float progress = 0f;
         
         while (progress < 30f)
         {
-            progress = Mathf.Lerp(progress, 30f, 0.125f);
+            progress = Mathf.Lerp(progress, 31f, 0.025f); // LERP NEVER GETS TO THE VALUE, ONLY CLOSE TO IT
 
             lArmMaterial.SetFloat(p_id, progress);
             rArmMaterial.SetFloat(p_id, progress);
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
 
         yield return new WaitForSeconds(1f);
 
-        alphaToLerp.gameObject.SetActive(false);
+    }
+
+    private void DisableRawImage()
+    {
+        peekToDisable.CrossFadeAlpha(0f, 1f, false);
+        StartCoroutine(StupidWorkAround());
+    }
+
+    private IEnumerator StupidWorkAround() // yup, it is. why isnt crossfade a coroutine?
+    {
+        yield return new WaitForSeconds(1.25f);
+        peekToDisable.gameObject.SetActive(false);
+    }
+
+    private void EnableRawImage()
+    {
+        peekToDisable.gameObject.SetActive(true);
+        peekToDisable.canvasRenderer.SetAlpha(0.01f);
+        peekToDisable.CrossFadeAlpha(1f, 1f, false);
     }
 
 }

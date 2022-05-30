@@ -25,11 +25,11 @@ public class Translate : TransformAction
         while (Vector3.Distance(TARGET.position, to_value) > 1f)
         {
             TARGET.position = Vector3.Lerp(TARGET.position, to_value, speed);
-
+            
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         to_value = to_value == destination ? origin : destination;
 

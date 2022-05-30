@@ -5,7 +5,7 @@ public class KillableObject : MonoBehaviour
 {
 
     public delegate void OnKill();
-    public OnKill WhenObjectKilled;
+    public OnKill WhenObjectKilled; // uncomment instances when implementation is added
 
     protected virtual IEnumerator Start()
     {
@@ -14,7 +14,7 @@ public class KillableObject : MonoBehaviour
 
     protected virtual void KillInstantly()
     {
-        WhenObjectKilled();
+        // WhenObjectKilled();
         Destroy(gameObject);
     }
 
