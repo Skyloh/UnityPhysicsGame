@@ -15,7 +15,11 @@ public class GBLoadKill : KillableObject
 
     int p_id;
     BoxCollider box_collider;
-    
+
+
+    public delegate void OnKill();
+    public OnKill WhenObjectKilled; // uncomment instances when implementation is added
+
     private void Awake()
     {
         destroyEffectMaterial = GetComponent<Renderer>().material;

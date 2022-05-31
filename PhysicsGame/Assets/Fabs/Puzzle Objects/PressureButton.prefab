@@ -250,7 +250,7 @@ MonoBehaviour:
   linked: []
   once_toggle: 0
   animated_object: {fileID: 3984721878619737357}
-  PULSE_OBJECT: {fileID: 2231409698806339032}
+  PULSE_SYSTEM: {fileID: 6504542290510829290}
 --- !u!1001 &2970765679251206440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -323,6 +323,12 @@ PrefabInstance:
 --- !u!4 &2231409698806339032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4021090946757567728, guid: ce174dbfe910dbe49be772a0e1da9343,
+    type: 3}
+  m_PrefabInstance: {fileID: 2970765679251206440}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6504542290510829290 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8322231432535074754, guid: ce174dbfe910dbe49be772a0e1da9343,
     type: 3}
   m_PrefabInstance: {fileID: 2970765679251206440}
   m_PrefabAsset: {fileID: 0}

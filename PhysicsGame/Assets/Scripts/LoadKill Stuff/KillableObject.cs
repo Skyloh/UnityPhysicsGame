@@ -4,9 +4,6 @@ using UnityEngine;
 public class KillableObject : MonoBehaviour
 {
 
-    public delegate void OnKill();
-    public OnKill WhenObjectKilled; // uncomment instances when implementation is added
-
     protected virtual IEnumerator Start()
     {
         yield return null;

@@ -32,10 +32,11 @@ public class SceneLoadTrigger : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        // i hate having to use so many tags.
+        /*
+         *  SceneChangeScript master = GameObject.FindGameObjectWithTag("SceneHub").GetComponent<SceneChangeScript>();
 
-        SceneChangeScript master = GameObject.FindGameObjectWithTag("SceneHub").GetComponent<SceneChangeScript>();
+        master.ChangeScene(loadSceneName);*/
 
-        master.ChangeScene(loadSceneName);
+        SceneChangeScript.instance.ChangeScene(loadSceneName);
     }
 }

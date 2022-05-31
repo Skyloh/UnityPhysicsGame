@@ -53,11 +53,7 @@ public class GravityControl : MonoBehaviour
 
         if (target != null) // if we already have something grabbed
         {
-            target.Released(); // drop it :>
-
-            target = null;
-
-            actionState = 0;
+            DropItem();
 
             return;
         }
@@ -116,6 +112,20 @@ public class GravityControl : MonoBehaviour
         }
 
         data.distance = RAYCAST_RANGE;
+    }
+
+    public void DropItem()
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        target.Released();
+
+        target = null;
+
+        actionState = 0;
     }
 
     public int getActionID()

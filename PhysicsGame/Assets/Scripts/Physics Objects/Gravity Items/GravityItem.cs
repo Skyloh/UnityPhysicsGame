@@ -6,7 +6,7 @@ public class GravityItem : GravityObject
 
     private const float ATTRACTION = 8f;
     private const float MINIMUM_HELD_DISTANCE = 1f;
-
+    
     // Start is called before the first frame update
     public override void Awake()
     {

@@ -27,7 +27,7 @@ public class CubeSpawner : PRTransform
             return;
         }
 
-        base.Activate();
+        PeekCameraScript.instance.Goto(transform);;
 
         stop_input = true;
 
@@ -50,8 +50,4 @@ public class CubeSpawner : PRTransform
         stop_input = false;
     }
 
-    public override void Deactivate()
-    {
-        is_active = false;
-    }
 }

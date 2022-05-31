@@ -26,7 +26,7 @@ public class SolidPRTransform : PRTransform
 
         Hand_Sigil.SetFloat("_IsActive", 1f);
 
-        base.Activate();
+        PeekCameraScript.instance.Goto(transform);;
     }
 
     public override void Deactivate()

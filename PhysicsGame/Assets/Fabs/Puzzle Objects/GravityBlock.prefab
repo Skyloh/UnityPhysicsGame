@@ -9584,7 +9584,7 @@ GameObject:
   - component: {fileID: 3582661921296619138}
   m_Layer: 10
   m_Name: GravityBlock
-  m_TagString: Untagged
+  m_TagString: GravityBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

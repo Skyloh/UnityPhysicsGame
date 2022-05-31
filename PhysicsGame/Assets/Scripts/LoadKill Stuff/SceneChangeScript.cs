@@ -6,19 +6,32 @@ using TMPro;
 
 public class SceneChangeScript : MonoBehaviour
 {
+    // NOTICE:
+    // THE INITIAL SCENE WITH THIS GAMEOBJECT MUST NOT BE LOADED INTO AGAIN (i.e. the player shouldnt be able to die).
+    // IF IT DOES, A DUPLICATE SINGLETON IS PUT INTO THE HIERARCHY AND THAT IS BAD.
 
-    [SerializeField] List<string> fake_code_functions;
+    // the proper solution involves a DDOL manager, which i didnt care to implement.
+    // cite: https://gamedev.stackexchange.com/questions/140014/how-can-i-get-all-dontdestroyonload-gameobjects
+
 
     TextMeshProUGUI tmp;
+
+    string current_scene_name;
+    
+    public static SceneChangeScript instance;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        instance = this;
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += GetTextElement;
+
+        current_scene_name = SceneManager.GetActiveScene().name;
     }
 
     private void OnDisable()
@@ -43,12 +56,14 @@ public class SceneChangeScript : MonoBehaviour
         }
     }
 
-    public void ChangeScene(string build_name)
+    // the coroutine needs to be called from THIS SCRIPT because if it is called from any other script,
+    // it immediately gets destroyed, and the process of moving through the IEnumerator stops.
+    public void ChangeScene(string name)
     {
-        StartCoroutine(Process(build_name));
+        StartCoroutine(ChangeSceneProcess(name));
     }
 
-    private IEnumerator Process(string build_name)
+    private IEnumerator ChangeSceneProcess(string build_name)
     {
         SceneManager.LoadScene("LoadingScene", LoadSceneMode.Single);
 
@@ -64,17 +79,21 @@ public class SceneChangeScript : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-
-        foreach (string s in fake_code_functions)
-        {
-            tmp.SetText(s);
-            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
-        }
+        
+        tmp.SetText("Rendering...");
+        yield return new WaitForSeconds(Random.Range(0.5f, 1f));
 
         load.allowSceneActivation = true;
 
         yield return new WaitUntil(() => load.isDone);
 
+        current_scene_name = build_name;
+
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(build_name));
+    }
+
+    public string GetSceneName()
+    {
+        return current_scene_name;
     }
 }

@@ -12,6 +12,7 @@ TagManager:
   - Button
   - LoadingUIText
   - SceneHub
+  - GravityBlock
   layers:
   - Default
   - TransparentFX

@@ -45,15 +45,19 @@ public class OverlayScript : MonoBehaviour
 
         PeekCameraScript.instance.OnDisable += DisableRawImage;
         PeekCameraScript.instance.OnEnable += EnableRawImage;
+
+        PlayerLoadKill.OnDisable += FadeToBlack;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         SceneLoadTrigger.WhenSceneChangeStarted -= ProcessOut;
         SceneLoadTrigger.WhenSceneChangeStarted -= FadeToBlack;
 
         PeekCameraScript.instance.OnDisable -= DisableRawImage;
         PeekCameraScript.instance.OnEnable -= EnableRawImage;
+
+        PlayerLoadKill.OnDisable -= FadeToBlack;
     }
 
     private IEnumerator Start() // called automatically when scene instance is loaded (but after awake so we dont get a nullref).

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PeekCameraScript : MonoBehaviour
 {
+    // this doesnt *have* to be a singleton, but i think i just got a lil lazy
+    // it's certainly convenient, if not unnecessary.
+
     [SerializeField] Vector3 default_euler;
 
     public delegate void WhenDisabled();

@@ -16,7 +16,7 @@ public class PRTransform : PuzzleReceiver
 
     public override void Activate()
     {
-        base.Activate();
+        PeekCameraScript.instance.Goto(transform);;
 
         if (has_transforms)
         {

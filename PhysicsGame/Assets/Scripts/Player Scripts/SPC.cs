@@ -20,14 +20,20 @@ public class SPC : MonoBehaviour
     private void OnEnable()
     {
         SceneLoadTrigger.WhenSceneChangeStarted += LockAll;
+
+        PlayerLoadKill.OnDisable += LockAll;
     }
     private void OnDisable()
     {
         SceneLoadTrigger.WhenSceneChangeStarted -= LockAll;
+
+        PlayerLoadKill.OnDisable -= LockAll;
     }
 
     private IEnumerator LockAll()
     {
+        GetComponent<Rigidbody>().isKinematic = false; // lil messy, but idk where else to put it
+
         PlayerStateManager.SwapState("IdlePS");
 
         GetComponent<PlayerInput>().enabled = false;
@@ -87,7 +93,7 @@ public class SPC : MonoBehaviour
 
     public void OnMouseDelta(InputAction.CallbackContext context)
     {
-        if (PlayerStateManager.CanRotate() && context.performed)
+        if (context.performed && PlayerStateManager.CanRotate())
         {
             mouse_input = context.ReadValue<Vector2>();
 

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class FPSCam : MonoBehaviour
 {
@@ -9,6 +11,17 @@ public class FPSCam : MonoBehaviour
 
     private float xRotation = 0f;
     private float zRotation = 0f;
+
+    [SerializeField] Volume deathVolume;
+
+    private void OnEnable()
+    {
+        PlayerLoadKill.OnDisable += LerpDeathVolume;
+    }
+    private void OnDisable()
+    {
+        PlayerLoadKill.OnDisable -= LerpDeathVolume;
+    }
 
     private void Start()
     {
@@ -45,6 +58,22 @@ public class FPSCam : MonoBehaviour
         var this_camera = GetComponent<Camera>().GetUniversalAdditionalCameraData();
 
         this_camera.cameraStack.Clear();
+    }
+
+    private IEnumerator LerpDeathVolume()
+    {
+        deathVolume.weight = 1f;
+
+        float progress = 1f;
+
+        while (progress > 0f)
+        {
+            progress = Mathf.Lerp(progress, -0.1f, 0.0125f);
+
+            deathVolume.weight = progress;
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 
 }
