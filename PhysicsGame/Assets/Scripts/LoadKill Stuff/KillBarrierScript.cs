@@ -7,7 +7,7 @@ public class KillBarrierScript : MonoBehaviour
 
     [SerializeField] protected bool kills_player = true;
 
-    private bool kills_objects = true;
+    [SerializeField] private bool kills_objects = true;
 
     private GravityControl playerControl; // bad, but i dont want to think abt a better way rn.
 
@@ -18,8 +18,6 @@ public class KillBarrierScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        kills_objects = !kills_player;
-
         KillableObject killableObject = other.GetComponent<KillableObject>();
 
         if (killableObject == null)

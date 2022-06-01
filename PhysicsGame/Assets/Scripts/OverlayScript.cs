@@ -42,9 +42,12 @@ public class OverlayScript : MonoBehaviour
     {
         SceneLoadTrigger.WhenSceneChangeStarted += ProcessOut;
         SceneLoadTrigger.WhenSceneChangeStarted += FadeToBlack;
-
-        PeekCameraScript.instance.OnDisable += DisableRawImage;
-        PeekCameraScript.instance.OnEnable += EnableRawImage;
+        
+        if (PeekCameraScript.instance != null)
+        {
+            PeekCameraScript.instance.OnDisable += DisableRawImage;
+            PeekCameraScript.instance.OnEnable += EnableRawImage;
+        }
 
         PlayerLoadKill.OnDisable += FadeToBlack;
     }
@@ -54,8 +57,11 @@ public class OverlayScript : MonoBehaviour
         SceneLoadTrigger.WhenSceneChangeStarted -= ProcessOut;
         SceneLoadTrigger.WhenSceneChangeStarted -= FadeToBlack;
 
-        PeekCameraScript.instance.OnDisable -= DisableRawImage;
-        PeekCameraScript.instance.OnEnable -= EnableRawImage;
+        if (PeekCameraScript.instance != null)
+        {
+            PeekCameraScript.instance.OnDisable -= DisableRawImage;
+            PeekCameraScript.instance.OnEnable -= EnableRawImage;
+        }
 
         PlayerLoadKill.OnDisable -= FadeToBlack;
     }

@@ -16,9 +16,7 @@ public class GBLoadKill : KillableObject
     int p_id;
     BoxCollider box_collider;
 
-
-    public delegate void OnKill();
-    public OnKill WhenObjectKilled; // uncomment instances when implementation is added
+    bool ienumerator_started = false;
 
     private void Awake()
     {
@@ -32,6 +30,7 @@ public class GBLoadKill : KillableObject
 
     protected override IEnumerator Start()
     {
+        //Debug.Log(gameObject.GetInstanceID());
         destroyEffectMaterial.SetFloat("_Scale", Random.Range(3f,15f));
 
         float current_progress = 1f;
@@ -51,10 +50,35 @@ public class GBLoadKill : KillableObject
     // lazy goon moment
     protected override IEnumerator KillAfterEffect()
     {
-        box_collider.attachedRigidbody.isKinematic = false;
+        if (ienumerator_started)
+        {
+            yield break;
+        }
+
+        ienumerator_started = true;
+
+        // leaving this in just in case it needs to be used
+        // also it's a good example of goon salt
+        /*
+        if (box_collider.attachedRigidbody == null)
+        {
+            WhenObjectKilled = null;
+
+            yield break; // i've had enough of the dupe call bug. this is a stupid hardcoded answer to it.
+        }
+        */
+
+        box_collider.attachedRigidbody.useGravity = false;
         box_collider.enabled = false;
 
         float current_progress = -1f;
+
+        if (WhenObjectKilled != null)
+        {
+            WhenObjectKilled();
+
+            WhenObjectKilled = null; // i hope that this actually dereferences
+        }
 
         while (current_progress < 0.9f)
         {
@@ -67,7 +91,6 @@ public class GBLoadKill : KillableObject
 
         destroyEffectMaterial.SetFloat(p_id, 1f);
 
-        // WhenObjectKilled();
         Destroy(gameObject);
     }
 }

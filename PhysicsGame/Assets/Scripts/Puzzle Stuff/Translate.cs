@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Translate : TransformAction
 {
+
     public override void Start()
     {
         if (TARGET == null)
@@ -24,10 +25,11 @@ public class Translate : TransformAction
     {
         while (Vector3.Distance(TARGET.position, to_value) > 1f)
         {
-            TARGET.position = Vector3.Lerp(TARGET.position, to_value, speed);
+            TARGET.position = Vector3.MoveTowards(TARGET.position, to_value, speed);
             
             yield return new WaitForEndOfFrame();
         }
+
 
         yield return new WaitForSeconds(0.25f);
 
@@ -40,4 +42,5 @@ public class Translate : TransformAction
 
         StartCoroutine(DoTransform());
     }
+
 }

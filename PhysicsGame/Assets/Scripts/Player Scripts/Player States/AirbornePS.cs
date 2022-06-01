@@ -9,8 +9,10 @@ public class AirbornePS : PlayerState
     RaycastHit ActionRaycastData;
     float ar_distance; // caches raycast distance, even though RaycastHit is a struct :/
     bool on_slope;
-    
 
+    CapsuleCollider capsuleCollider;
+    float original_capsule_radius;
+    float prior_xzvelo = 999f; // used to see if the player is stuck in a position
 
     // KNOWN *BUG* (s)
     // Holding into the face of a wall slows your descent slightly.
@@ -21,10 +23,13 @@ public class AirbornePS : PlayerState
     // you sometimes move up it. If you mash jump as well, you can jump
     // on the slope, too.
 
-    public AirbornePS(Vector2 c, Transform t, Rigidbody r) : base(c, t, r)
+    public AirbornePS(Vector2 c, Transform t, Rigidbody r, CapsuleCollider cc) : base(c, t, r)
     {
         StateID = 2;
         on_slope = false;
+
+        capsuleCollider = cc;
+        original_capsule_radius = cc.radius;
     }
 
     public override void StateStart()
@@ -64,6 +69,8 @@ public class AirbornePS : PlayerState
             else if (GroundInfo.distance < RAYCAST_LENGTH)
             {
 
+                capsuleCollider.radius = original_capsule_radius;
+
                 if (isKeyDown)
                 {
                     StateLibrary.library.PlayerStateMachine.SwapState("MovementPS");
@@ -73,6 +80,7 @@ public class AirbornePS : PlayerState
 
                 StateLibrary.library.PlayerStateMachine.SwapState("IdlePS");
 
+                return;
             }
 
         }
@@ -98,10 +106,18 @@ public class AirbornePS : PlayerState
 
             // ignore Y velo because we dont care about limiting rising/falling speed.
             // probably really suboptimal to define my own method of this 2d pythag but stfu future goon
-            if (getXZVelo() > MAX_RESULTANT_AIR_VELO)
+            float xzvelo = getXZVelo();
+
+            if (xzvelo > MAX_RESULTANT_AIR_VELO)
             {
                 rbody.AddForce(rbody.velocity * -1.5f, ForceMode.Force);
             }
+            else if (Mathf.Abs(xzvelo - prior_xzvelo) < 0.3f)
+            {
+                capsuleCollider.radius = Mathf.Clamp(capsuleCollider.radius - 0.1f, 0.1f, original_capsule_radius);
+            }
+
+            prior_xzvelo = xzvelo;
         }
 
     }

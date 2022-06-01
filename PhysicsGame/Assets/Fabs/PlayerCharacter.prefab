@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1dddc2abfc61f4ea197800ddee45df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SENSITIVITY: 20
+  SENSITIVITY: 23
   deathVolume: {fileID: 5988316456885308544}
 --- !u!114 &5402463612384303847
 MonoBehaviour:
@@ -6669,6 +6669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ffe0f723cd09342b01a43fcb8f73a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_currently_dying: 0
 --- !u!114 &7368871900532305327
 MonoBehaviour:
   m_ObjectHideFlags: 0

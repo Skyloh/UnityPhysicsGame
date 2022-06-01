@@ -503,8 +503,8 @@ ModelImporter:
       name: Holding
       takeName: Armature|Grabbing + Holding
       internalID: 0
-      firstFrame: 35
-      lastFrame: 81
+      firstFrame: 40
+      lastFrame: 64
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -10,8 +10,10 @@ public class IdlePS : PlayerState
         StateID = 0;
     }
 
+
     public override void InFixedUpdate()
     {
+        
     }
 
     public override void WASD(InputAction.CallbackContext context)

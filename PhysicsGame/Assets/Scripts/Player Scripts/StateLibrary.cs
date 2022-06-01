@@ -30,7 +30,7 @@ public class StateLibrary : MonoBehaviour
 
         PlayerStateMachine = GetComponent<PlayerSM>();
         MovementPlayerState = new MovementPS(Vector2.zero, player_transform, player_rb);
-        AirbornePlayerState = new AirbornePS(Vector2.zero, player_transform, player_rb);
+        AirbornePlayerState = new AirbornePS(Vector2.zero, player_transform, player_rb, GetComponent<CapsuleCollider>());
         PrejumpPlayerState = new PrejumpPS(Vector2.zero, player_transform, player_rb);
         IdlePlayerState = new IdlePS(Vector2.zero, player_transform, player_rb);
         SprintPlayerState = new SprintPS(Vector2.zero, player_transform, player_rb);

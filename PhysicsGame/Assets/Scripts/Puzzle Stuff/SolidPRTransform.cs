@@ -8,6 +8,13 @@ public class SolidPRTransform : PRTransform
 
     Material Hand_Sigil;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        Hand_Sigil.SetFloat("_IsActive", 0f);
+    }
+
     void OnEnable()
     {
         Hand_Sigil = Hand_Sigil_OBJ.GetComponent<Renderer>().material;
@@ -27,6 +34,8 @@ public class SolidPRTransform : PRTransform
         Hand_Sigil.SetFloat("_IsActive", 1f);
 
         PeekCameraScript.instance.Goto(transform);;
+
+        base.Activate();
     }
 
     public override void Deactivate()

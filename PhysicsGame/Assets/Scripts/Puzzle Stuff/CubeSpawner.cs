@@ -39,15 +39,24 @@ public class CubeSpawner : PRTransform
         if (current != null)
         {
             current.DoKill(false);
+
+            current = null; // dereference asap
         }
 
         GameObject cache = GameObject.Instantiate(fabby, transform.position + transform.up * 2f, Quaternion.identity);
 
         current = cache.GetComponent<KillableObject>();
 
-        yield return new WaitForSeconds(1f);
+        current.WhenObjectKilled += EncapsulateSpawnCube;
+        yield return null;
+       // yield return new WaitForSeconds(1f);
 
         stop_input = false;
+    }
+
+    private void EncapsulateSpawnCube()
+    {
+        StartCoroutine(SpawnCube());
     }
 
 }

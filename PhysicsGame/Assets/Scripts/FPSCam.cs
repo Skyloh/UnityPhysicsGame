@@ -6,6 +6,7 @@ using System.Collections;
 public class FPSCam : MonoBehaviour
 {
     [SerializeField] private float SENSITIVITY = 4f;
+    //[SerializeField] private float deltatimeconstant = 1f;
 
     private Transform POV;
 
@@ -38,10 +39,10 @@ public class FPSCam : MonoBehaviour
     // much ado about nothing :/
     public void RotateCamera(Vector2 input)
     {
-        xRotation += input.y / SENSITIVITY;
+        xRotation += (input.y / SENSITIVITY); // xRotation += deltatimeconstant * Time.deltaTime * (input.y / SENSITIVITY);
         xRotation = Mathf.Clamp(xRotation, -85f, 85f);
 
-        zRotation = (zRotation - (input.x / (SENSITIVITY*2f))) % 360; 
+        zRotation = (zRotation - (input.x / (SENSITIVITY*2f))) % 360; // zRotation = (zRotation - deltatimeconstant * Time.deltaTime * (input.x / (SENSITIVITY*2f))) % 360; 
 
         transform.rotation = Quaternion.Euler(-xRotation, -zRotation, 0); // used to be localRotation when the camera was not child of PlayerCharacter
     }
