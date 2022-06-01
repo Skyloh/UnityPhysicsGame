@@ -16,8 +16,6 @@ public class WallGrabPS : PlayerState
     Transform perspective;
     Transform overlay;
 
-    GravityControl playerControl;
-
     public WallGrabPS(Vector2 current_input, Transform player, Rigidbody rbody) : base (current_input, player, rbody)
     {
         StateID = 5;
@@ -45,13 +43,6 @@ public class WallGrabPS : PlayerState
         {
             overlay = Camera.main.transform;
         }
-
-        if (playerControl == null)
-        {
-            playerControl = transform.gameObject.GetComponent<GravityControl>();
-        }
-
-        playerControl.DropItem();
 
         // *retch*
         allow_action = false;

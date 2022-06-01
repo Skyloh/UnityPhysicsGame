@@ -39,8 +39,10 @@ public class DissolvingGate : KillBarrierScript
 
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         if (!kills_player)
         {
             render_component.material.SetColor("_DissolverColor", block_kill_color);

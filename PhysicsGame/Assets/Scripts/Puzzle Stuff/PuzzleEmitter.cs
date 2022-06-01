@@ -46,7 +46,7 @@ public class PuzzleEmitter : MonoBehaviour
     {
         if (linked.Count == 0)
         {
-            Debug.LogError("A Puzzle Emitter has no linked objects!");
+            Debug.LogError("A Puzzle Emitter has no linked objects! " + gameObject.name);
             gameObject.SetActive(false);
             return;
         }

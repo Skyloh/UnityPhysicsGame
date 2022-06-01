@@ -6370,6 +6370,7 @@ GameObject:
   - component: {fileID: 8754031723340904277}
   - component: {fileID: 4330556730560246530}
   - component: {fileID: 3131932289442077462}
+  - component: {fileID: 3684888424337380275}
   m_Layer: 9
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -6591,6 +6592,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9936d1c3-c975-4442-a44f-4e791494d1d1
     m_ActionName: Basic/Sprint[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0f322d8b-4690-4248-866b-5fbd2260d45c
+    m_ActionName: Basic/CloseGame[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Basic
@@ -6875,6 +6891,18 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 0
+--- !u!114 &3684888424337380275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218669699451240609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f50f211aa97c48849b451c0d6eaf93e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6261885958465393960
 GameObject:
   m_ObjectHideFlags: 0

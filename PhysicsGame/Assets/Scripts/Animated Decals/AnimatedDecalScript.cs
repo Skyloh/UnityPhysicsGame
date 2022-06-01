@@ -24,7 +24,7 @@ public class AnimatedDecalScript : MonoBehaviour
 
             transform.position += transform.up * sinOfTime * float_height;
 
-            to_affect.Rotate(Vector3.down * speed * 0.5f * (2 + sinOfTime));
+            to_affect.Rotate(Vector3.down * speed * 2f * (3 + sinOfTime));
 
             yield return new WaitForEndOfFrame();
         }

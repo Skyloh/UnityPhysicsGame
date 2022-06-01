@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2DayTrip.unity
     guid: 55276c59ec1b5bf48ad90cb3eff1b65a
+  - enabled: 1
+    path: Assets/Scenes/DeveloperScene.unity
+    guid: a6bf9085d729f0d419216259bf18d9ea
   m_configObjects: {}

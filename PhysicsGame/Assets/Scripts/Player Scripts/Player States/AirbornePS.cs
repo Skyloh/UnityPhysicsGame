@@ -14,6 +14,8 @@ public class AirbornePS : PlayerState
     float original_capsule_radius;
     float prior_xzvelo = 999f; // used to see if the player is stuck in a position
 
+    GravityControl controller; // hacky solution on the final day :blush:
+
     // KNOWN *BUG* (s)
     // Holding into the face of a wall slows your descent slightly.
     // This could be a nice gimmick?
@@ -23,13 +25,15 @@ public class AirbornePS : PlayerState
     // you sometimes move up it. If you mash jump as well, you can jump
     // on the slope, too.
 
-    public AirbornePS(Vector2 c, Transform t, Rigidbody r, CapsuleCollider cc) : base(c, t, r)
+    public AirbornePS(Vector2 c, Transform t, Rigidbody r, CapsuleCollider cc, GravityControl gc) : base(c, t, r)
     {
         StateID = 2;
         on_slope = false;
 
         capsuleCollider = cc;
         original_capsule_radius = cc.radius;
+
+        controller = gc;
     }
 
     public override void StateStart()
@@ -94,6 +98,8 @@ public class AirbornePS : PlayerState
                 // adjusts the player location to match the animation because apparently root transforms are cringe
                 transform.position += Vector3.up * (ar_distance - transform.position.y - 2.1f) + transform.forward * 0.3f;
 
+                controller.DropItem();
+
                 StateLibrary.library.PlayerStateMachine.CarefulSwapState("WallGrabPS"); // dont go into wallgrab if we were in it before
                                                                                         // this is important bc it essentially locks the player from being immediately returned into wallgrab after letting go.
             }
@@ -112,7 +118,7 @@ public class AirbornePS : PlayerState
             {
                 rbody.AddForce(rbody.velocity * -1.5f, ForceMode.Force);
             }
-            else if (Mathf.Abs(xzvelo - prior_xzvelo) < 0.3f)
+            else if (controller.actionState == 1f && Mathf.Abs(xzvelo - prior_xzvelo) < 0.3f)
             {
                 capsuleCollider.radius = Mathf.Clamp(capsuleCollider.radius - 0.1f, 0.1f, original_capsule_radius);
             }

@@ -1,22 +1,26 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(BoxCollider))]
 public class KillBarrierScript : MonoBehaviour
 {
-    [SerializeField] private bool instant_kill = false;
+    [SerializeField] protected bool instant_kill = false;
 
     [SerializeField] protected bool kills_player = true;
 
-    [SerializeField] private bool kills_objects = true;
+    [SerializeField] protected bool kills_objects = true;
 
-    private GravityControl playerControl; // bad, but i dont want to think abt a better way rn.
+    protected GravityControl playerControl; // bad, but i dont want to think abt a better way rn.
 
-    private void Start()
+    protected virtual void Start()
     {
-        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<GravityControl>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        playerControl = player.GetComponent<GravityControl>();
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         KillableObject killableObject = other.GetComponent<KillableObject>();
 
